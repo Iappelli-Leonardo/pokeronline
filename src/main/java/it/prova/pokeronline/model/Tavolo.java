@@ -29,6 +29,8 @@ public class Tavolo {
 	private Integer esperienzaMin;
 	@Column(name = "cifraMin")
 	private Integer cifraMin;
+	@Column(name = "creatore")
+	private String creatore;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tavolo")
 	private Set<Utente> utenti = new HashSet<Utente>(0);
@@ -39,7 +41,7 @@ public class Tavolo {
 	}
 
 	public Tavolo(Long id, String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin,
-			Set<Utente> utenti) {
+			Set<Utente> utenti, String creatore) {
 		super();
 		this.id = id;
 		this.denominazione = denominazione;
@@ -47,6 +49,7 @@ public class Tavolo {
 		this.esperienzaMin = esperienzaMin;
 		this.cifraMin = cifraMin;
 		this.utenti = utenti;
+		this.creatore = creatore;
 	}
 	
 	
@@ -58,24 +61,28 @@ public class Tavolo {
 		this.dataCreazione = dataCreazione;
 		this.esperienzaMin = esperienzaMin;
 		this.cifraMin = cifraMin;
+		
 	}
 
 	public Tavolo(String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin,
-			Set<Utente> utenti) {
+			Set<Utente> utenti, String creatore) {
 		super();
 		this.denominazione = denominazione;
 		this.dataCreazione = dataCreazione;
 		this.esperienzaMin = esperienzaMin;
 		this.cifraMin = cifraMin;
 		this.utenti = utenti;
+		this.creatore = creatore;
+		
 	}
 
-	public Tavolo(String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin) {
+	public Tavolo(String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin, String creatore) {
 		super();
 		this.denominazione = denominazione;
 		this.dataCreazione = dataCreazione;
 		this.esperienzaMin = esperienzaMin;
-		this.cifraMin = cifraMin;
+		this.cifraMin = cifraMin;	
+		this.creatore = creatore;
 	}
 
 	public Long getId() {
@@ -125,5 +132,15 @@ public class Tavolo {
 	public void setUtenti(Set<Utente> utenti) {
 		this.utenti = utenti;
 	}
+
+	public String getCreatore() {
+		return creatore;
+	}
+
+	public void setCreatore(String creatore) {
+		this.creatore = creatore;
+	}
+	
+	
 	
 }
