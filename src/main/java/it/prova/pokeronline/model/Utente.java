@@ -18,6 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "utente")
 public class Utente {
@@ -71,6 +72,45 @@ public class Utente {
 		this.stato = stato;
 		this.tavolo = tavolo;
 		this.ruoli = ruoli;
+	}
+	
+
+	public Utente(Long id, String username, String password, String nome, String cognome, Date dateCreated,
+			Integer esperienzaAccumulata, Integer creditoAccumulato, StatoUtente stato) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateCreated = dateCreated;
+		this.esperienzaAccumulata = esperienzaAccumulata;
+		this.creditoAccumulato = creditoAccumulato;
+		this.stato = stato;
+	}
+	public Utente(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+
+	public Utente(String username, String password, String nome, String cognome, Date dateCreated) {
+		this.username = username;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateCreated = dateCreated;
+	}
+
+	public Utente(Long id, String username, String password, String nome, String cognome, Date dateCreated,
+			StatoUtente stato) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateCreated = dateCreated;
+		this.stato = stato;
 	}
 
 	public Utente(String username, String password, String nome, String cognome, Date dateCreated,
