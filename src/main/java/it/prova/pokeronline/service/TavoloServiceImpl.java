@@ -3,11 +3,13 @@ package it.prova.pokeronline.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.pokeronline.model.Tavolo;
 import it.prova.pokeronline.repository.tavolo.TavoloRepository;
 
+@Service
 public class TavoloServiceImpl implements TavoloService{
 
 	@Autowired

@@ -52,8 +52,6 @@ public class Tavolo {
 		this.creatore = creatore;
 	}
 	
-	
-
 	public Tavolo(Long id, String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin) {
 		super();
 		this.id = id;
@@ -61,7 +59,6 @@ public class Tavolo {
 		this.dataCreazione = dataCreazione;
 		this.esperienzaMin = esperienzaMin;
 		this.cifraMin = cifraMin;
-		
 	}
 
 	public Tavolo(String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin,
@@ -140,7 +137,5 @@ public class Tavolo {
 	public void setCreatore(String creatore) {
 		this.creatore = creatore;
 	}
-	
-	
 	
 }
