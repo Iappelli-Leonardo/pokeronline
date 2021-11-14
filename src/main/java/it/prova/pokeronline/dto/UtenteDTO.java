@@ -50,18 +50,14 @@ public class UtenteDTO {
 
 	private StatoUtente stato;
 	
-	@NotBlank(message = "{tavolo.notblank}",groups = {ValidationWithPassword.class,ValidationNoPassword.class})
-	private TavoloDTO tavolo;
-
 	private Long[] ruoliIds;
 	private Set<RuoloDTO> ruoli = new HashSet<>(0);
 
 	public UtenteDTO() {
 	}
 
-	public UtenteDTO(Long id, String username, String nome, String cognome, Integer esperienzaAccumulata,
-			Integer creditoAccumulato ,StatoUtente stato, 
-			List<RuoloDTO> ruoliList) {
+	public UtenteDTO(Long id, String username, String nome, String cognome, Integer esperienzaAccumulata, 
+			Integer creditoAccumulato, StatoUtente stato, List<RuoloDTO> ruoliList) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -170,17 +166,10 @@ public class UtenteDTO {
 		this.creditoAccumulato = creditoAccumulato;
 	}
 
-	public TavoloDTO getTavolo() {
-		return tavolo;
-	}
-
-	public void setTavolo(TavoloDTO tavolo) {
-		this.tavolo = tavolo;
-	}
 
 	public Utente buildUtenteModel(boolean includeIdRoles) {
-		Utente result = new Utente(this.id, this.username, this.password, this.nome, this.cognome, this.dateCreated, 
-				this.stato);
+		Utente result = new Utente(this.id, this.username, this.password, this.nome, this.cognome, this.dateCreated,
+				this.creditoAccumulato, this.esperienzaAccumulata, this.stato);
 		if (includeIdRoles && ruoliIds != null)
 			result.setRuoli(Arrays.asList(ruoliIds).stream().map(id -> new Ruolo(id)).collect(Collectors.toSet()));
 
@@ -188,21 +177,9 @@ public class UtenteDTO {
 	}
 
 	//niente password...
-	public static UtenteDTO buildUtenteDTOFromModel(Utente utenteModel,  boolean includeTavoli) {
-		UtenteDTO result = new UtenteDTO(utenteModel.getId(), utenteModel.getUsername(), utenteModel.getNome(), utenteModel.getCognome(),
-				utenteModel.getEsperienzaAccumulata(), utenteModel.getCreditoAccumulato(), utenteModel.getStato(),	
-				RuoloDTO.createRuoloDTOListFromModelSet(utenteModel.getRuoli()));
-
-		if (includeTavoli)
-			result.setTavolo(TavoloDTO.buildTavoloDTOFromModel(utenteModel.getTavolo()));
-
-		return result;
+	public static UtenteDTO buildUtenteDTOFromModel(Utente utenteModel) {
+		return new UtenteDTO(utenteModel.getId(), utenteModel.getUsername(), utenteModel.getNome(),
+				utenteModel.getCognome(), utenteModel.getCreditoAccumulato(), utenteModel.getEsperienzaAccumulata(), 
+				utenteModel.getStato() ,RuoloDTO.createRuoloDTOListFromModelSet(utenteModel.getRuoli()));
 	}
-	
-	public static List<UtenteDTO> createFilmDTOListFromModelList(List<Utente> modelListInput, boolean includeTavoli) {
-		return modelListInput.stream().map(filmEntity -> {
-			return UtenteDTO.buildUtenteDTOFromModel(filmEntity, includeTavoli);
-		}).collect(Collectors.toList());
-	}
-
 }

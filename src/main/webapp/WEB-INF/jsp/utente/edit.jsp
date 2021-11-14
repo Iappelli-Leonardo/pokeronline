@@ -40,18 +40,16 @@
 			  
 			  <div class='card'>
 				    <div class='card-header'>
-				        <h5>Inserisci nuovo elemento</h5> 
+				        <h5>Modifica elemento</h5> 
 				    </div>
 				    <div class='card-body'>
-		
-							<h6 class="card-title">I campi con <span class="text-danger">*</span> sono obbligatori</h6>
 		
 		
 							<form:form modelAttribute="edit_utente_attr" method="post" action="${pageContext.request.contextPath}/utente/update" novalidate="novalidate" class="row g-3">
 								<input type="hidden" name="id" value="${edit_utente_attr.id }">
 							
 								<div class="col-md-6">
-									<label for="nome" class="form-label">Nome <span class="text-danger">*</span></label>
+									<label for="nome" class="form-label">Nome <span class="text-danger"></span></label>
 									<spring:bind path="nome">
 										<input type="text" name="nome" id="nome" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il nome" value="${edit_utente_attr.nome }" required>
 									</spring:bind>
@@ -59,18 +57,32 @@
 								</div>
 								
 								<div class="col-md-6">
-									<label for="cognome" class="form-label">Cognome <span class="text-danger">*</span></label>
+									<label for="cognome" class="form-label">Cognome <span class="text-danger"></span></label>
 									<spring:bind path="cognome">
 										<input type="text" name="cognome" id="cognome" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il cognome" value="${edit_utente_attr.cognome }" required>
 									</spring:bind>
 									<form:errors  path="cognome" cssClass="error_field" />
 								</div>
 								<div class="col-md-6">
-									<label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+									<label for="username" class="form-label">Username <span class="text-danger"></span></label>
 									<spring:bind path="username">
 										<input type="text" class="form-control ${status.error ? 'is-invalid' : ''}" name="username" id="username" placeholder="Inserire Username" value="${edit_utente_attr.username }" required>
 									</spring:bind>
 									<form:errors  path="username" cssClass="error_field" />
+								</div>
+								<div class="col-md-6">
+									<label for="esperienzaAccumulata" class="form-label">Esperienza<span class="text-danger"></span></label>
+									<spring:bind path="esperienzaAccumulata">
+										<input type="number" class="form-control ${status.error ? 'is-invalid' : ''}" name="esperienzaAccumulata" id="esperienzaAccumulata" placeholder="Inserire l'esperienza Accumulata" value="${edit_utente_attr.esperienzaAccumulata }" required>
+									</spring:bind>
+									<form:errors  path="esperienzaAccumulata" cssClass="error_field" />
+								</div>
+								<div class="col-md-6">
+									<label for="creditoAccumulato" class="form-label">Credito <span class="text-danger"></span></label>
+									<spring:bind path="creditoAccumulato">
+										<input type="number" class="form-control ${status.error ? 'is-invalid' : ''}" name="creditoAccumulato" id="creditoAccumulato" placeholder="Inserire il credito Accumulato" value="${edit_utente_attr.creditoAccumulato }" required>
+									</spring:bind>
+									<form:errors  path="creditoAccumulato" cssClass="error_field" />
 								</div>
 								 
 								

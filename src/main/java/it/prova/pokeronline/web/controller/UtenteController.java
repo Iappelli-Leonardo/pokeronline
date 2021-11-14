@@ -20,11 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.prova.pokeronline.dto.RuoloDTO;
-import it.prova.pokeronline.dto.TavoloDTO;
 import it.prova.pokeronline.dto.UtenteDTO;
 import it.prova.pokeronline.model.Utente;
 import it.prova.pokeronline.service.RuoloService;
-import it.prova.pokeronline.service.TavoloService;
 import it.prova.pokeronline.service.UtenteService;
 import it.prova.pokeronline.utility.UtilityForm;
 import it.prova.pokeronline.validation.ValidationNoPassword;
@@ -40,9 +38,6 @@ public class UtenteController {
 
 	@Autowired
 	private RuoloService ruoloService;
-	
-	@Autowired
-	private TavoloService tavoloService;
 
 	@GetMapping
 	public ModelAndView listAllUtenti() {
@@ -89,14 +84,6 @@ public class UtenteController {
 		if (!result.hasFieldErrors("password") && !utenteDTO.getPassword().equals(utenteDTO.getConfermaPassword()))
 			result.rejectValue("confermaPassword", "password.diverse");
 
-	
-		if(utenteDTO.getTavolo() == null || utenteDTO.getTavolo().getId() == null) {
-			result.rejectValue("tavolo", "tavolo.notnull");
-		}
-		else
-			utenteDTO.setTavolo(TavoloDTO
-					.buildTavoloDTOFromModel(tavoloService.caricaSingoloElemento(utenteDTO.getTavolo().getId())));
-		
 		if (result.hasErrors()) {
 			model.addAttribute("mappaRuoliConSelezionati_attr", UtilityForm.buildCheckedRolesForPages(
 					RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()), utenteDTO.getRuoliIds()));
@@ -111,7 +98,7 @@ public class UtenteController {
 	@GetMapping("/edit/{idUtente}")
 	public String edit(@PathVariable(required = true) Long idUtente, Model model) {
 		Utente utenteModel = utenteService.caricaSingoloUtenteConRuoli(idUtente);
-		model.addAttribute("edit_utente_attr", UtenteDTO.buildUtenteDTOFromModel(utenteModel, true));
+		model.addAttribute("edit_utente_attr", UtenteDTO.buildUtenteDTOFromModel(utenteModel));
 		model.addAttribute("mappaRuoliConSelezionati_attr",
 				UtilityForm.buildCheckedRolesFromRolesAlreadyInUtente(
 						RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()),

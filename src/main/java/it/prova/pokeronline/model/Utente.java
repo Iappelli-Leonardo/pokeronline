@@ -47,7 +47,7 @@ public class Utente {
 	private StatoUtente stato;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "tavolo_id", nullable = false)
+	@JoinColumn(name = "tavolo_id")
 	private Tavolo tavolo;
 
 	@ManyToMany

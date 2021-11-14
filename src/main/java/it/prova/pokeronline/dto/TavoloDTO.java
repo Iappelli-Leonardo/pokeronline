@@ -102,7 +102,7 @@ public class TavoloDTO {
 		this.cifraMin = cifraMin;
 	}
 	
-	public Tavolo buildFilmModel() {
+	public Tavolo buildTavoloModel() {
 		return new Tavolo(this.id, this.denominazione, this.dataCreazione, this.esperienzaMin, this.cifraMin);
 	}
 	
@@ -112,8 +112,8 @@ public class TavoloDTO {
 	}
 	
 	public static List<TavoloDTO> createTavoloDTOListFromModelList(List<Tavolo> modelListInput) {
-		return modelListInput.stream().map(filmEntity -> {
-			return TavoloDTO.buildTavoloDTOFromModel(filmEntity);
+		return modelListInput.stream().map(tavoloEntity -> {
+			return TavoloDTO.buildTavoloDTOFromModel(tavoloEntity);
 		}).collect(Collectors.toList());
 	}
 
