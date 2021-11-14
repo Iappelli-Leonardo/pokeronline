@@ -38,6 +38,14 @@
 						  <dt class="col-sm-3 text-right">Username:</dt>
 						  <dd class="col-sm-9">${show_utente_attr.username}</dd>
 					   	</dl>
+					   	  	<dl class="row">
+						  <dt class="col-sm-3 text-right">Esperienza Accumulata:</dt>
+						  <dd class="col-sm-9">${show_utente_attr.esperienzaAccumulata}</dd>
+					   	</dl>
+					   	  	<dl class="row">
+						  <dt class="col-sm-3 text-right">Credito Accumulato:</dt>
+						  <dd class="col-sm-9">${show_utente_attr.creditoAccumulato}</dd>
+					   	</dl>
 					   <dl class="row">
 						  <dt class="col-sm-3 text-right">Data della creazione:</dt>
 						  <dd class="col-sm-9"><fmt:formatDate type="date" value = "${show_utente_attr.dateCreated}" /></dd>

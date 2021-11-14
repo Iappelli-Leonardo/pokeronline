@@ -29,19 +29,23 @@ public class TavoloDTO {
 	@NotNull(message = "{cifraMin.notnull}")
 	@Min(1)
 	private Integer cifraMin;
+	
+	@NotBlank(message = "{creatore.notblank}")
+	private String creatore;
 
 	public TavoloDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public TavoloDTO(Long id, String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin) {
+	public TavoloDTO(Long id, String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin, String creatore) {
 		super();
 		this.id = id;
 		this.denominazione = denominazione;
 		this.dataCreazione = dataCreazione;
 		this.esperienzaMin = esperienzaMin;
 		this.cifraMin = cifraMin;
+		this.creatore = creatore;
 	}
 	
 	public TavoloDTO(String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin) {
@@ -102,17 +106,14 @@ public class TavoloDTO {
 		return new Tavolo(this.id, this.denominazione, this.dataCreazione, this.esperienzaMin, this.cifraMin);
 	}
 	
-	public static TavoloDTO buildTavoloDTOFromModel(Tavolo filmModel, boolean includeRegisti) {
-		TavoloDTO result = new TavoloDTO(filmModel.getId(), filmModel.getDenominazione(), filmModel.getDataCreazione(),
-				filmModel.getCifraMin(), filmModel.getEsperienzaMin());
-
-
-		return result;
+	public static TavoloDTO buildTavoloDTOFromModel(Tavolo tavoloModel) {
+		return new TavoloDTO(tavoloModel.getId(), tavoloModel.getDenominazione(), tavoloModel.getDataCreazione(),
+				tavoloModel.getEsperienzaMin(), tavoloModel.getCifraMin(), tavoloModel.getCreatore());
 	}
 	
-	public static List<TavoloDTO> createTavoloDTOListFromModelList(List<Tavolo> modelListInput, boolean includeRegisti) {
+	public static List<TavoloDTO> createTavoloDTOListFromModelList(List<Tavolo> modelListInput) {
 		return modelListInput.stream().map(filmEntity -> {
-			return TavoloDTO.buildTavoloDTOFromModel(filmEntity, includeRegisti);
+			return TavoloDTO.buildTavoloDTOFromModel(filmEntity);
 		}).collect(Collectors.toList());
 	}
 

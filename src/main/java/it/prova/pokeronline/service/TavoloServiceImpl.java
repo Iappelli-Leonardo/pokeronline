@@ -50,4 +50,9 @@ public class TavoloServiceImpl implements TavoloService{
 		return tavoloRepository.findByExample(example);
 	}
 
+	@Transactional(readOnly = true)
+	public Tavolo cercaPerDenominazione(String denominazione) {
+		return tavoloRepository.findByDenominazione(denominazione);
+	}
+
 }

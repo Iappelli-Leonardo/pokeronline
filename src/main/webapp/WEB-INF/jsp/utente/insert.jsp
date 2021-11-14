@@ -88,6 +88,20 @@
 									</spring:bind>
 									<form:errors  path="confermaPassword" cssClass="error_field" />
 								</div>
+								<div class="col-md-6">
+									<label for="esperienzaAccumulata" class="form-label">Esperienza <span class="text-danger">*</span></label>
+									<spring:bind path="esperienzaAccumulata">
+										<input type="number" class="form-control ${status.error ? 'is-invalid' : ''}" name="esperienzaAccumulata" id="esperienzaAccumulata" placeholder="Inserire l' sperienza Accumulata" value="${insert_utente_attr.esperienzaAccumulata }" required>
+									</spring:bind>
+									<form:errors  path="esperienzaAccumulata" cssClass="error_field" />
+								</div>
+								<div class="col-md-6">
+									<label for="creditoAccumulato" class="form-label">Credito <span class="text-danger">*</span></label>
+									<spring:bind path="creditoAccumulato">
+										<input type="number" class="form-control ${status.error ? 'is-invalid' : ''}" name="creditoAccumulato" id="creditoAccumulato" placeholder="Inserire il credito" value="${insert_utente_attr.creditoAccumulato }" required>
+									</spring:bind>
+									<form:errors  path="creditoAccumulato" cssClass="error_field" />
+								</div>
 								
 								<%-- facendolo con i tag di spring purtroppo viene un po' spaginato, ho preferito a mano. E poi 
 									anche il binding andava gestito diversamente
@@ -109,13 +123,59 @@
 								  	</c:forEach>
 								</div>
 								
+									<div class="col-md-6">
+										<label for="tavoloSearchInput" class="form-label">Tavolo:</label>
+										<spring:bind path="tavolo">
+											<input class="form-control ${status.error ? 'is-invalid' : ''}" type="text" id="tavoloSearchInput"
+												name="tavoloInput" value="${insert_utente_attr.tavolo.denominazione}${empty insert_utente_attr.tavolo.denominazione?'':' '}">
+										</spring:bind>
+										<input type="hidden" name="tavolo.id" id="tavoloId" value="${insert_utente_attr.tavolo.id}">
+										<form:errors  path="tavolo" cssClass="error_field" />
+									</div>
+								
+								
+								
 								<div class="col-12">
 									<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
 									<input class="btn btn-outline-warning" type="reset" value="Ripulisci">
 								</div>
 		
 						</form:form>
-  
+  								<%-- FUNZIONE JQUERY UI PER AUTOCOMPLETE --%>
+								<script>
+									$("#tavoloSearchInput").autocomplete({
+										 source: function(request, response) {
+										        $.ajax({
+										            url: "../tavolo/searchTavoliAjax",
+										            datatype: "json",
+										            data: {
+										                term: request.term,   
+										            },
+										            success: function(data) {
+										                response($.map(data, function(item) {
+										                    return {
+											                    label: item.label,
+											                    value: item.value
+										                    }
+										                }))
+										            }
+										        })
+										    },
+										//quando seleziono la voce nel campo deve valorizzarsi la descrizione
+									    focus: function(event, ui) {
+									        $("#tavoloSearchInput").val(ui.item.label)
+									        return false
+									    },
+									    minLength: 1,
+									    //quando seleziono la voce nel campo hidden deve valorizzarsi l'id
+									    select: function( event, ui ) {
+									    	$('#tavoloId').val(ui.item.value);
+									    	//console.log($('#registaId').val())
+									        return false;
+									    }
+									});
+								</script>
+								<!-- end script autocomplete -->	
 				    
 				    
 					<!-- end card-body -->			   
