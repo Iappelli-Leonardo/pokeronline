@@ -34,8 +34,8 @@ public class PokeronlineApplication implements CommandLineRunner {
 		if (ruoloServiceInstance.cercaPerDescrizioneECodice("Classic User", "ROLE_PLAYER") == null) {
 			ruoloServiceInstance.inserisciNuovo(new Ruolo("Classic User", "ROLE_PLAYER"));
 		}
-		if (ruoloServiceInstance.cercaPerDescrizioneECodice("Special User", "ROLE_SPECIAL_PLAYER") == null) {
-			ruoloServiceInstance.inserisciNuovo(new Ruolo("Special User", "ROLE_SPECIAL_PLAYER"));
+		if (ruoloServiceInstance.cercaPerDescrizioneECodice("Special", "ROLE_SPECIAL_PLAYER") == null) {
+			ruoloServiceInstance.inserisciNuovo(new Ruolo("Special", "ROLE_SPECIAL_PLAYER"));
 		}
 
 		// A DIFFERENZA DEGLI ALTRI PROGETTI CERCO SOLO PER USERNAME PERCHE' SE VADO
@@ -62,11 +62,11 @@ public class PokeronlineApplication implements CommandLineRunner {
 			utenteServiceInstance.inserisciNuovo(classicUser1);
 		}
 
-		if (utenteServiceInstance.findByUsername("user2") == null) {
+		if (utenteServiceInstance.findByUsername("special") == null) {
 			Utente specialUser = new Utente("special", "special", "Antoniooo", "Verdiii", new Date(), 1, 2);
 			specialUser.setStato(StatoUtente.ATTIVO);
 			specialUser.getRuoli()
-					.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Special User", "ROLE_SPECIAL_PLAYER"));
+					.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Special", "ROLE_SPECIAL_PLAYER"));
 			utenteServiceInstance.inserisciNuovo(specialUser);
 		}
 

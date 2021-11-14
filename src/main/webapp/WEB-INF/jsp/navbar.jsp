@@ -58,7 +58,7 @@
 					</a>
 			    <div class="dropdown-menu" aria-labelledby="dropdown01">
 			      <a style="text-align: center;" class="dropdown-item border-top" href="${pageContext.request.contextPath}/logout">logout</a>
-			      <a class="dropdown-item border-top" href="${pageContext.request.contextPath}/utente/password">Nuova passsword</a>
+			      <a class="dropdown-item border-top"href="${pageContext.request.contextPath}/utente/resetuserpassword">ResetPassword</a>
 			    </div>
 		    </div>
 		   </sec:authorize>

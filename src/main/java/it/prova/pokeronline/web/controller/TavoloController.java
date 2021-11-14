@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,9 +31,9 @@ public class TavoloController {
 	@GetMapping
 	public ModelAndView listAllRegisti() {
 		ModelAndView mv = new ModelAndView();
-		List<Tavolo> registi = tavoloService.listAllElements();
+		List<Tavolo> tavoli = tavoloService.listAllElements();
 		// trasformiamo in DTO
-		mv.addObject("tavoli_list_attribute", TavoloDTO.createTavoloDTOListFromModelList(registi));
+		mv.addObject("tavoli_list_attribute", TavoloDTO.createTavoloDTOListFromModelList(tavoli));
 		mv.setViewName("tavolo/list");
 		return mv;
 	}
@@ -48,12 +49,24 @@ public class TavoloController {
 			RedirectAttributes redirectAttrs) {
 
 		if (result.hasErrors()) {
-			return "regista/insert";
+			return "tavolo/insert";
 		}
 		tavoloService.inserisciNuovo(tavoloDTO.buildTavoloModel());
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
-		return "redirect:/regista";
+		return "redirect:/tavolo";
+	}
+
+	@GetMapping("/search")
+	public String searchRegista() {
+		return "tavolo/search";
+	}
+	
+	@PostMapping("/list")
+	public String listRegisti(TavoloDTO tavoloExample, ModelMap model) {
+		List<Tavolo> registi = tavoloService.findByExample(tavoloExample.buildTavoloModel());
+		model.addAttribute("registi_list_attribute", TavoloDTO.createTavoloDTOListFromModelList(registi));
+		return "tavolo/list";
 	}
 
 }

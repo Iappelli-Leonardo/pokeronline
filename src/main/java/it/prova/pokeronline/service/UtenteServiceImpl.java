@@ -109,6 +109,22 @@ public class UtenteServiceImpl implements UtenteService {
 		repository.save(utenteReloaded);
 	}
 
+	@Override
+	public void cambiaPassword(String nuova, String vecchia, String conferma, Utente utenteInstance) {
+		Utente utenteReloaded = repository.findById(utenteInstance.getId()).orElse(null);
+		if(utenteReloaded == null)
+			throw new RuntimeException("Elemento non trovato");
+		
+		if(!passwordEncoder.matches(vecchia, utenteInstance.getPassword()))
+			throw new RuntimeException("Ultima password non corrispondente");
+			
+		if(!nuova.equals(conferma))
+			throw new RuntimeException("Password non confermata");
+		
+		utenteReloaded.setPassword(passwordEncoder.encode(nuova));
+		repository.save(utenteReloaded);
+	}
+
 
 	
 

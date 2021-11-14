@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -164,5 +166,41 @@ public class UtenteController {
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/utente";
 	}
+	
+	@PostMapping("/resetpw/{idUtente}")
+	public String resetPw(@RequestParam Long idUtente, RedirectAttributes redirectAttrs) {
+
+		utenteService.aggiornaPassword(utenteService.caricaSingoloUtente(idUtente));
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/utente";
+	}
+
+	@GetMapping("/resetuserpassword")
+	public String resetUserPassword(Model model) {
+
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		model.addAttribute("resetpw_utente_attr",
+				UtenteDTO.buildUtenteDTOFromModel(utenteService.findByUsername(userDetails.getUsername())));
+		return "utente/resetpassword";
+	}
+
+	@PostMapping("/saveresetuserpw")
+	public String saveResetUserPw(RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
+		String vecchiaPassword = request.getParameter("oldpassword");
+		String nuovaPassword = request.getParameter("password");
+		String confermaPassword = request.getParameter("confermaPassword");
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String usernameUtenteSessione = userDetails.getUsername();
+
+		Utente utenteInSessione = utenteService.findByUsername(usernameUtenteSessione);
+
+		utenteService.cambiaPassword(nuovaPassword, vecchiaPassword, confermaPassword, utenteInSessione);
+
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/logout";
+	}
+
 
 }

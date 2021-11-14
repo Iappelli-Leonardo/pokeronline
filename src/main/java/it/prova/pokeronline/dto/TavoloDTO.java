@@ -38,14 +38,13 @@ public class TavoloDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TavoloDTO(Long id, String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin, String creatore) {
+	public TavoloDTO(Long id, String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin) {
 		super();
 		this.id = id;
 		this.denominazione = denominazione;
 		this.dataCreazione = dataCreazione;
 		this.esperienzaMin = esperienzaMin;
 		this.cifraMin = cifraMin;
-		this.creatore = creatore;
 	}
 	
 	public TavoloDTO(String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin) {
@@ -103,12 +102,12 @@ public class TavoloDTO {
 	}
 	
 	public Tavolo buildTavoloModel() {
-		return new Tavolo(this.id, this.denominazione, this.dataCreazione, this.esperienzaMin, this.cifraMin);
+		return new Tavolo(this.id, this.denominazione, this.esperienzaMin, this.cifraMin);
 	}
 	
 	public static TavoloDTO buildTavoloDTOFromModel(Tavolo tavoloModel) {
 		return new TavoloDTO(tavoloModel.getId(), tavoloModel.getDenominazione(), tavoloModel.getDataCreazione(),
-				tavoloModel.getEsperienzaMin(), tavoloModel.getCifraMin(), tavoloModel.getCreatore());
+				tavoloModel.getEsperienzaMin(), tavoloModel.getCifraMin());
 	}
 	
 	public static List<TavoloDTO> createTavoloDTOListFromModelList(List<Tavolo> modelListInput) {

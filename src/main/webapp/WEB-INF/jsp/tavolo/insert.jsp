@@ -53,29 +53,28 @@
 							
 								<div class="col-md-6">
 									<label for="nome" class="form-label">denominazione <span class="text-danger">*</span></label>
-									<spring:bind path="nome">
-									<input type="text" name="nome" id="nome" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il nome" value="${insert_tavolo_attr.denominazione }" required>
+									<spring:bind path="denominazione">
+									<input type="text" name="denominazione" id="denominazione" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire la denominazione" value="${insert_tavolo_attr.denominazione }" required>
 									</spring:bind>
-									<form:errors  path="nome" cssClass="error_field" />
+									<form:errors  path="denominazione" cssClass="error_field" />
 								</div>
 								
 								
 								<div class="col-md-6">
-									<label for="cognome" class="form-label">Cognome <span class="text-danger">*</span></label>
-									<spring:bind path="cognome">
-									<input type="text" name="cognome" id="cognome" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il cognome" value="${insert_tavolo_attr.cognome }" required>
+									<label for="esperienzaMin" class="form-label">Esperienza Minima <span class="text-danger">*</span></label>
+									<spring:bind path="esperienzaMin">
+									<input type="number" name="esperienzaMin" id="esperienzaMin" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire l'esperienza Minima" value="${insert_tavolo_attr.esperienzaMin }" required>
 									</spring:bind>
-									<form:errors  path="cognome" cssClass="error_field" />
+									<form:errors  path="esperienzaMin" cssClass="error_field" />
 								</div>
 							
 								<div class="col-md-6">
-									<label for="nickName" class="form-label">Nickname <span class="text-danger">*</span></label>
-									<spring:bind path="nickName">
-									<input type="text" class="form-control ${status.error ? 'is-invalid' : ''}" name="nickName" id="nickName" placeholder="Inserire il nickname" value="${insert_tavolo_attr.nickName }" required>
+									<label for="cifraMin" class="form-label">Cifra Minima <span class="text-danger">*</span></label>
+									<spring:bind path="cifraMin">
+									<input type="number" class="form-control ${status.error ? 'is-invalid' : ''}" name="cifraMin" id="cifraMin" placeholder="Inserire la cifra Minima" value="${insert_tavolo_attr.cifraMin }" required>
 									</spring:bind>
-									<form:errors  path="nickName" cssClass="error_field" />
+									<form:errors  path="cifraMin" cssClass="error_field" />
 								</div>
-								
 								
 								
 							<div class="col-12">
