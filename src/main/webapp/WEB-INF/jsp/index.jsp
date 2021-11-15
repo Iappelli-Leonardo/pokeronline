@@ -8,10 +8,22 @@
 	 	<jsp:include page="./header.jsp" />
 		<!-- Custom styles per le features di bootstrap 'Columns with icons' -->
 	   <link href="${pageContext.request.contextPath}/assets/css/features.css" rel="stylesheet">
-	   
+	   <script>
+			function caricaParametri(){
+				$.ajax({
+			        url: "${pageContext.request.contextPath }/utente/caricaParametri",
+			        type: 'GET',
+			        dataType: 'json',
+			        success: function(res) {
+			        	$("#credito").html(res[0].credito);
+			        	$("#exp").html(res[0].exp);
+			        }
+			    });
+			}	
+		</script>
 	   <title>Raccolta Film</title>
 	 </head>
-	   <body class="d-flex flex-column h-100">
+	   <body class="d-flex flex-column h-100" onload="caricaParametri()">
 	   		
 	   		<!-- #####################################  -->
 	   		<!-- elementi grafici per le features in basso  -->
@@ -35,8 +47,6 @@
 			</svg>
 			<!-- ############## end ###################  -->
 	   
-	   
-	   
 	   		<!-- Fixed navbar -->
 	   		<jsp:include page="./navbar.jsp"></jsp:include>
 	    
@@ -44,17 +54,28 @@
 			<!-- Begin page content -->
 			<main class="flex-shrink-0">
 			  <div class="container">
-			  
+			  	<div class="alert alert-success alert-dismissible fade show  ${successMessage==null?'d-none':'' }" role="alert">
+				  ${successMessage}
+				  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
+				</div>
 			  	<div class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none':'' }" role="alert">
 				  ${errorMessage}
 				  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
 				</div>
 			    
-			     <div class="p-5 mb-4 bg-light rounded-3">
+			     <div class="p-5 mb-4 bg-light rounded-3" >
 				      <div class="container-fluid py-5">
 				        <h1 class="display-5 fw-bold">Poker online</h1>
 				        <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. </p>
 				        <a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/regista/search">Vai a Ricerca</a>
+				      </div>
+				      <div class="p-5" style="    display: flex;
+												    justify-content: center;
+												    align-items: baseline;
+												    flex-wrap: wrap;
+												    flex-direction: row;">
+				    <h2> Esperienza Utente:</h2>&nbsp;<h2 id="exp" style="margin: 0; color: red"></h2>&nbsp;&nbsp;
+				     <h2> Credito Utente: </h2>&nbsp;<h2 id="credito" style="margin: 0; color: orange"></h2>
 				      </div>
 			    </div>
 			    

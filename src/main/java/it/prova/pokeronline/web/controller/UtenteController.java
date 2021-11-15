@@ -56,14 +56,6 @@ public class UtenteController {
 		return mv;
 	}
 	
-	@GetMapping("/autoReg")
-	public String autoInsert(Model model) {
-		model.addAttribute("mappaRuoliConSelezionati_attr", UtilityForm
-				.buildCheckedRolesForPages(RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()), null));
-		model.addAttribute("insert_utente_attr", new UtenteDTO());
-		return "/user/insert";
-	}
-	
 	@GetMapping("/search")
 	public String searchUtente(Model model) {
 		model.addAttribute("mappaRuoliConSelezionati_attr", UtilityForm
@@ -252,6 +244,24 @@ public class UtenteController {
 		utenteService.aggiungiCredito(utenteInSessione, creditoDaAggiungere);
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "index";
-	}}
+		}
+	}
+	
+	private String buildJsonResponseSingleUser(Utente utente) {
+		JsonArray ja = new JsonArray();
 
+		JsonObject jo = new JsonObject();
+		jo.addProperty("credito", utente.getCreditoAccumulato());
+		jo.addProperty("exp", utente.getEsperienzaAccumulata());
+		ja.add(jo);
+
+		return new Gson().toJson(ja);
+	}
+	
+	@GetMapping("/caricaParametri")
+	public @ResponseBody String caricaParametri(HttpServletRequest request) {
+		
+		Utente utente = utenteService.findByUsername(request.getUserPrincipal().getName());
+		return buildJsonResponseSingleUser(utente);
+	}
 }

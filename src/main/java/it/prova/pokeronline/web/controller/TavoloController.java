@@ -75,8 +75,7 @@ public class TavoloController {
 		tavoloService.inserisciNuovo(tavoloDTO.buildTavoloModel());
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
-		return "redirect:/tavolo";
-	}
+		return "redirect:/tavolo/findMyTables";	}
 	
 	@GetMapping("/search")
 	public String searchTavolo(ModelMap model) {

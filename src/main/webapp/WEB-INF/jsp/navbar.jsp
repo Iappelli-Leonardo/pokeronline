@@ -59,6 +59,7 @@
 				<a class="nav-link active dropdown-toggle" style="color:white!important" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				 Utente: <sec:authentication property="name"/> (${userInfo.nome } ${userInfo.cognome })
 					</a>
+					
 			    <div class="dropdown-menu" aria-labelledby="dropdown01">
 			      <a style="text-align: center;" class="dropdown-item border-top" href="${pageContext.request.contextPath}/logout">logout</a>
 			      <a style="text-align: center;" class="dropdown-item border-top"href="${pageContext.request.contextPath}/utente/resetuserpassword">ResetPassword</a>
