@@ -96,5 +96,47 @@ public class TavoloController {
 		model.addAttribute("show_tavolo_attr", tavolo);
 		return "tavolo/show";
 	}
+	
+	@GetMapping("/edit/{idTavolo}")
+	public String edit(@PathVariable(required = true) Long idTavolo, Model model) {
+		Tavolo tavolo = tavoloService.caricaSingoloElemento(idTavolo);
+		model.addAttribute("update_tavolo_attr", tavolo);
+		return "tavolo/edit";
+	}
+
+	@PostMapping("/modifica")
+	public String saveUpdate(@Valid @ModelAttribute("update_tavolo_attr") TavoloDTO tavoloDTO, Model model,
+			BindingResult result, RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
+		if (result.hasErrors())
+			return "tavolo/edit";
+
+		Tavolo tavolo = tavoloService.caricaSingoloElemento(tavoloDTO.getId());
+
+		if (tavolo.getGiocatori().size() == 0) {
+
+			tavoloDTO.setGiocatori(tavolo.getGiocatori());
+			tavoloDTO.setUtenteCreatore(UtenteDTO.buildUtenteDTOFromModel(tavolo.getCreatore()));
+
+			tavoloService.aggiorna(tavoloDTO.buildTavoloModel());
+		
+		} else
+			request.setAttribute("errorMessage", "Ci sono ancora giocatori che stanno giocando");
+
+		List<Tavolo> tavoli = tavoloService
+				.cercaMieiTavoli(utenteService.findByUsername(request.getUserPrincipal().getName()));
+		model.addAttribute("tavoli_list_attribute", tavoli);
+		
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/tavolo";
+	}
+
+	@GetMapping("/delete/{idTavolo}")
+	public String delete(@PathVariable(required = true) Long idTavolo, Model model) {
+
+		Tavolo tavolo = tavoloService.caricaSingoloElemento(idTavolo);
+		model.addAttribute("delete_tavolo_attr", tavolo);
+		return "tavolo/delete";
+	}
 
 }

@@ -46,16 +46,14 @@
 					  <dt class="col-sm-3 text-right">Data Creazione:</dt>
 					  <dd class="col-sm-9"><fmt:formatDate type = "date" value = "${show_tavolo_attr.dataCreazione}" /></dd>
 			    	</dl>
-			    	
 			    	<dl class="row">
-			    	<dt class="col-sm-3 text-right">Giocatori Al Tavolo:</dt>
-			    	<dd class="col-sm-9">
+			    		<dt class="col-sm-3 text-right">Giocatori Al Tavolo:</dt>
+			    		<dd class="col-sm-9">
 			    	<c:forEach items="${show_tavolo_attr.giocatori }" var="giocatoriItem">
-							<td>${giocatoriItem.username}<br></td>
+						<td>${giocatoriItem.username}<br></td>
 					</c:forEach>
 					</dd>
 			    	</dl>
-			    	
 			    <!-- end card body -->
 			    </div>
 			    
