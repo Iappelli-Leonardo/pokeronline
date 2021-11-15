@@ -27,7 +27,7 @@
 			<div class="container">
 		
 					<%-- se l'attributo in request ha errori --%>
-					<spring:hasBindErrors  name="film_creatore_attr">
+					<spring:hasBindErrors  name="update_tavolo_attr">
 						<%-- alert errori --%>
 						<div class="alert alert-danger " role="alert">
 							Attenzione!! Sono presenti errori di validazione
@@ -60,22 +60,10 @@
 										<form:errors  path="denominazione" cssClass="error_field" />
 									</div>
 									
-									<div class="col-md-6">	
-										<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${update_tavolo_attr.dataCreazione}' />
-										<div class="form-group col-md-6">
-											<label for="dataCreazione" class="form-label">Data di creazione</label>
-			                        		<spring:bind path="dataCreazione">
-				                        		<input class="form-control ${status.error ? 'is-invalid' : ''}" id="dataCreazione" type="date" placeholder="dd/MM/yy"
-				                            		title="formato : gg/mm/aaaa"  name="dataCreazione" value="${parsedDate}" >
-				                            </spring:bind>
-			                            	<form:errors  path="dataCreazione" cssClass="error_field" />
-										</div>
-									</div>
-										
 									<div class="col-md-6">
 										<label for="esperienzaMin" class="form-label">Esperienza minima</label>
 										<spring:bind path="esperienzaMin">
-											<input type="number" class="form-control ${status.error ? 'is-invalid' : ''}" name="esperienzaMin" id="esperienzaMin" placeholder="Inserire esperienza minima" value="${update_tavolo_attr.esperienzaMin }">
+											<input type="number" name="esperienzaMin" id="esperienzaMin" class="form-control ${status.error ? 'is-invalid' : ''}"  placeholder="Inserire esperienza minima" value="${update_tavolo_attr.esperienzaMin }" required>
 										</spring:bind>
 										<form:errors  path="esperienzaMin" cssClass="error_field" />
 									</div>
@@ -83,10 +71,24 @@
 									<div class="col-md-6">
 										<label for="cifraMin" class="form-label">Cifra minima</label>
 										<spring:bind path="cifraMin">
-											<input type="number" class="form-control ${status.error ? 'is-invalid' : ''}" name="cifraMin" id="cifraMin" placeholder="Inserire la cifra minima" value="${update_tavolo_attr.cifraMin }">
+											<input type="number" class="form-control ${status.error ? 'is-invalid' : ''}" name="cifraMin" id="cifraMin" placeholder="Inserire la cifra minima" value="${update_tavolo_attr.cifraMin }"  required>
 										</spring:bind>
 										<form:errors  path="cifraMin" cssClass="error_field" />
 									</div>
+									
+									<div class="col-md-6">	
+										<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${update_tavolo_attr.dataCreazione}' />
+										<div class="form-group col-md-6">
+											<label for="dataCreazione" class="form-label">Data di creazione</label>
+			                        		<spring:bind path="dataCreazione">
+				                        		<input class="form-control ${status.error ? 'is-invalid' : ''}" id="dataCreazione" type="date" placeholder="dd/MM/yy"
+				                            		title="formato : gg/mm/aaaa"  name="dataCreazione"  required value="${parsedDate}" >
+				                            </spring:bind>
+			                            	<form:errors  path="dataCreazione" cssClass="error_field" />
+										</div>
+									</div>
+				
+									
 									
 									<div class="col-12">	
 										<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>

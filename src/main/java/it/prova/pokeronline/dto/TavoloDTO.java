@@ -19,7 +19,6 @@ public class TavoloDTO {
 	private Long id;
 
 	@NotBlank(message = "{denominazione.notblank}")
-	@Size(min = 4, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri")
 	private String denominazione;
 
 	@NotNull(message = "{dataCreazione.notnull}")

@@ -12,13 +12,15 @@ public interface TavoloService {
 
 	public Tavolo caricaSingoloElemento(Long id);
 	
-	public Tavolo caricaSingoloElementoConUtenti(Long id);
+	public Tavolo caricaSingoloTavoloConGiocatori(Long id);
 
 	public void aggiorna(Tavolo tavoloInstance);
 
 	public void inserisciNuovo(Tavolo tavoloInstance);
 
 	public void rimuovi(Tavolo tavoloInstance);
+	
+	public void rimuoviById(Long id);
 	
 	public List<Tavolo> findByExample(Tavolo example);
 	

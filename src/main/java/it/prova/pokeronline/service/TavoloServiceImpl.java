@@ -25,11 +25,6 @@ public class TavoloServiceImpl implements TavoloService{
 	public Tavolo caricaSingoloElemento(Long id) {
 		return tavoloRepository.findById(id).orElse(null);
 	}
-
-	@Transactional(readOnly = true)
-	public Tavolo caricaSingoloElementoConUtenti(Long id) {
-		return null;
-	}
 	
 	@Transactional
 	public void aggiorna(Tavolo tavoloInstance) {
@@ -59,6 +54,16 @@ public class TavoloServiceImpl implements TavoloService{
 	@Override
 	public List<Tavolo> cercaMieiTavoli(Utente utenteInstance) {
 		return tavoloRepository.findAllByUtenteCreatore_IdIs(utenteInstance.getId());
+	}
+
+	@Transactional(readOnly = true)
+	public Tavolo caricaSingoloTavoloConGiocatori(Long id) {
+		return tavoloRepository.findByIdConGiocatori(id).orElse(null);
+	}
+
+	@Override
+	public void rimuoviById(Long id) {
+		tavoloRepository.deleteById(id);
 	}
 
 }
