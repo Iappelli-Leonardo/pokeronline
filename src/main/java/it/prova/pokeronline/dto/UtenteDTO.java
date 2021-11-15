@@ -38,7 +38,7 @@ public class UtenteDTO {
 	@NotBlank(message = "{cognome.notblank}",groups = {ValidationWithPassword.class,ValidationNoPassword.class})
 	private String cognome;
 
-	private Date dateCreated;
+	private Date dataCreazione;
 	
 	@NotNull(message = "{esperienzaAccumulata.notnull}",groups = {ValidationWithPassword.class,ValidationNoPassword.class})
 	@Min(0)
@@ -109,12 +109,12 @@ public class UtenteDTO {
 		this.cognome = cognome;
 	}
 
-	public Date getDateCreated() {
-		return dateCreated;
+	public Date getDataCreazione() {
+		return dataCreazione;
 	}
 
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
+	public void setDataCreazione(Date dataCreazione) {
+		this.dataCreazione = dataCreazione;
 	}
 
 	public StatoUtente getStato() {
@@ -168,7 +168,7 @@ public class UtenteDTO {
 
 
 	public Utente buildUtenteModel(boolean includeIdRoles) {
-		Utente result = new Utente(this.id, this.username, this.password, this.nome, this.cognome, this.dateCreated,
+		Utente result = new Utente(this.id, this.username, this.password, this.nome, this.cognome, this.dataCreazione,
 				this.creditoAccumulato, this.esperienzaAccumulata, this.stato);
 		if (includeIdRoles && ruoliIds != null)
 			result.setRuoli(Arrays.asList(ruoliIds).stream().map(id -> new Ruolo(id)).collect(Collectors.toSet()));

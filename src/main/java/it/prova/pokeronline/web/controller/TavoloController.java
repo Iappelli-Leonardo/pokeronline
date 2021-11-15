@@ -78,11 +78,12 @@ public class TavoloController {
 		return "redirect:/tavolo";
 	}
 	
-
 	@GetMapping("/search")
-	public String searchRegista() {
+	public String searchTavolo(ModelMap model) {
+		model.addAttribute("search_tavolo_attr", new TavoloDTO());
 		return "tavolo/search";
 	}
+	
 	@PostMapping("/list")
 	public String listTavoli(TavoloDTO tavoloExample, ModelMap model) {
 		List<Tavolo> tavoli = tavoloService.findByExample(tavoloExample.buildTavoloModel());

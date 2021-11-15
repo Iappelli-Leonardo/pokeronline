@@ -125,6 +125,11 @@ public class UtenteServiceImpl implements UtenteService {
 		repository.save(utenteReloaded);
 	}
 
+	@Transactional(readOnly = true)
+	public List<Utente> cercaByCognomENomeLike(String input) {
+		return repository.findByCognomeIgnoreCaseContainingOrNomeIgnoreCaseContainingOrderByNomeAsc(input, input);
+	}
+
 
 	
 

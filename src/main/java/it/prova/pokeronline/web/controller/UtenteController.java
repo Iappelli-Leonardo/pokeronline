@@ -55,12 +55,19 @@ public class UtenteController {
 		mv.setViewName("utente/list");
 		return mv;
 	}
-
+	
+	@GetMapping("/autoReg")
+	public String autoInsert(Model model) {
+		model.addAttribute("mappaRuoliConSelezionati_attr", UtilityForm
+				.buildCheckedRolesForPages(RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()), null));
+		model.addAttribute("insert_utente_attr", new UtenteDTO());
+		return "/user/insert";
+	}
+	
 	@GetMapping("/search")
 	public String searchUtente(Model model) {
 		model.addAttribute("mappaRuoliConSelezionati_attr", UtilityForm
 				.buildCheckedRolesForPages(RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()), null));
-
 		return "utente/search";
 	}
 
@@ -68,7 +75,6 @@ public class UtenteController {
 	public String listUtenti(Utente utenteExample, ModelMap model, HttpServletRequest request) {
 		String[] ruoliInput = request.getParameterValues("ruoliIds");
 		List<Utente> utenti = utenteService.findByExample(utenteExample, ruoliInput);
-
 		model.addAttribute("utente_list_attribute", utenti);
 		return "utente/list";
 	}
@@ -211,7 +217,7 @@ public class UtenteController {
 	@GetMapping(value = "/searchUtentiAjax", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody String searchTavolo(@RequestParam String term) {
 
-		List<Utente> listaTavoloByTerm = utenteService.cercaByCognomeENomeILike(term);
+		List<Utente> listaTavoloByTerm = utenteService.cercaByCognomENomeLike(term);
 		return buildJsonResponse(listaTavoloByTerm);
 	}
 
