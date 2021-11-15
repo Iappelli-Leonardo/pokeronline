@@ -30,15 +30,14 @@ public class TavoloDTO {
 	@Min(1)
 	private Integer cifraMin;
 	
-	@NotBlank(message = "{creatore.notblank}")
-	private String creatore;
+	private UtenteDTO utenteCreatore;
 
 	public TavoloDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public TavoloDTO(Long id, String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin) {
+	public TavoloDTO(Long id, String denominazione,Date dataCreazione, Integer esperienzaMin, Integer cifraMin) {
 		super();
 		this.id = id;
 		this.denominazione = denominazione;
@@ -101,12 +100,21 @@ public class TavoloDTO {
 		this.cifraMin = cifraMin;
 	}
 	
+	
+	public UtenteDTO getUtenteCreatore() {
+		return utenteCreatore;
+	}
+
+	public void setUtenteCreatore(UtenteDTO utenteCreatore) {
+		this.utenteCreatore = utenteCreatore;
+	}
+
 	public Tavolo buildTavoloModel() {
-		return new Tavolo(this.id, this.denominazione, this.esperienzaMin, this.cifraMin);
+		return new Tavolo(this.id, this.denominazione, this.cifraMin ,this.esperienzaMin, this.dataCreazione);
 	}
 	
 	public static TavoloDTO buildTavoloDTOFromModel(Tavolo tavoloModel) {
-		return new TavoloDTO(tavoloModel.getId(), tavoloModel.getDenominazione(), tavoloModel.getDataCreazione(),
+		return new TavoloDTO(tavoloModel.getId(), tavoloModel.getDenominazione(),tavoloModel.getDataCreazione(),
 				tavoloModel.getEsperienzaMin(), tavoloModel.getCifraMin());
 	}
 	

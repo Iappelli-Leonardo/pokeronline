@@ -65,8 +65,7 @@ public class PokeronlineApplication implements CommandLineRunner {
 		if (utenteServiceInstance.findByUsername("special") == null) {
 			Utente specialUser = new Utente("special", "special", "Antoniooo", "Verdiii", new Date(), 1, 2);
 			specialUser.setStato(StatoUtente.ATTIVO);
-			specialUser.getRuoli()
-					.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Special", "ROLE_SPECIAL_PLAYER"));
+			specialUser.getRuoli().add(ruoloServiceInstance.cercaPerDescrizioneECodice("Special", "ROLE_SPECIAL_PLAYER"));
 			utenteServiceInstance.inserisciNuovo(specialUser);
 		}
 

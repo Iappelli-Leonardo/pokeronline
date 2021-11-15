@@ -33,17 +33,13 @@ public class CustomTavoloRepositoryImpl implements CustomTavoloRepository{
 			whereClauses.add("t.dataCreazione >= :dataCreazione ");
 			paramaterMap.put("dataCreazione", example.getDataCreazione());
 		}
-		if (example.getEsperienzaMin() != 0) {
-			whereClauses.add("t.esperienzaMin like :esperienzaMin ");
-			paramaterMap.put("esperienzaMin", "%" + example.getEsperienzaMin() + "%");
+		if (example.getEsperienzaMin() != null) {
+			whereClauses.add("t.esperienzaMin >= :esperienzaMin ");
+			paramaterMap.put("esperienzaMin", example.getEsperienzaMin());
 		}
-		if (example.getCifraMin() != 0) {
-			whereClauses.add("t.esperienzaMin like :esperienzaMin ");
-			paramaterMap.put("esperienzaMin", "%" + example.getCifraMin() + "%");
-		}
-		if (StringUtils.isNotEmpty(example.getCreatore())) {
-			whereClauses.add("t.creatore >= :creatore ");
-			paramaterMap.put("creatore", example.getCreatore());
+		if (example.getCifraMin() != null) {
+			whereClauses.add("t.cifraMin >= :cifraMin ");
+			paramaterMap.put("cifraMin" , example.getCifraMin());
 		}
 		
 		queryBuilder.append(!whereClauses.isEmpty()?" and ":"");

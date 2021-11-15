@@ -2,6 +2,7 @@ package it.prova.pokeronline.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.prova.pokeronline.dto.TavoloDTO;
+import it.prova.pokeronline.dto.UtenteDTO;
 import it.prova.pokeronline.model.Tavolo;
+import it.prova.pokeronline.model.Utente;
 import it.prova.pokeronline.service.TavoloService;
+import it.prova.pokeronline.service.UtenteService;
 
 
 @Controller
@@ -27,6 +31,9 @@ public class TavoloController {
 
 	@Autowired
 	private TavoloService tavoloService;
+	
+	@Autowired
+	UtenteService utenteService;
 	
 	@GetMapping
 	public ModelAndView listAllRegisti() {
@@ -37,6 +44,13 @@ public class TavoloController {
 		mv.setViewName("tavolo/list");
 		return mv;
 	}
+	@GetMapping("/findMyTables")
+	public String findMieiTavoli(Model model, HttpServletRequest request) {
+		List<Tavolo> tavoli = tavoloService
+				.cercaMieiTavoli(utenteService.findByUsername(request.getUserPrincipal().getName()));
+		model.addAttribute("tavolo_list_attribute", tavoli);
+		return "tavolo/list";
+	}
 
 	@GetMapping("/insert")
 	public String createTavolo(Model model) {
@@ -46,26 +60,32 @@ public class TavoloController {
 
 	@PostMapping("/save")
 	public String saveTavolo(@Valid @ModelAttribute("insert_tavolo_attr") TavoloDTO tavoloDTO, BindingResult result,
-			RedirectAttributes redirectAttrs) {
+			RedirectAttributes redirectAttrs,  HttpServletRequest request) {
 
-		if (result.hasErrors()) {
+		if (result.hasErrors())
 			return "tavolo/insert";
-		}
+
+		Utente utente = utenteService.findByUsername(request.getUserPrincipal().getName());
+		UtenteDTO creatore = new UtenteDTO();
+		creatore.setId(utente.getId());
+		tavoloDTO.setUtenteCreatore(creatore);
+
 		tavoloService.inserisciNuovo(tavoloDTO.buildTavoloModel());
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/tavolo";
 	}
+	
 
 	@GetMapping("/search")
 	public String searchRegista() {
 		return "tavolo/search";
 	}
-	
 	@PostMapping("/list")
-	public String listRegisti(TavoloDTO tavoloExample, ModelMap model) {
-		List<Tavolo> registi = tavoloService.findByExample(tavoloExample.buildTavoloModel());
-		model.addAttribute("registi_list_attribute", TavoloDTO.createTavoloDTOListFromModelList(registi));
+	public String listTavoli(TavoloDTO tavoloExample, ModelMap model) {
+		System.out.println(tavoloExample);
+		List<Tavolo> tavoli = tavoloService.findByExample(tavoloExample.buildTavoloModel());
+		model.addAttribute("tavoli_list_attribute", TavoloDTO.createTavoloDTOListFromModelList(tavoli));
 		return "tavolo/list";
 	}
 

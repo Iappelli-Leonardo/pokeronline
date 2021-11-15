@@ -3,6 +3,7 @@ package it.prova.pokeronline.service;
 import java.util.List;
 
 import it.prova.pokeronline.model.Tavolo;
+import it.prova.pokeronline.model.Utente;
 
 
 public interface TavoloService {
@@ -22,4 +23,6 @@ public interface TavoloService {
 	public List<Tavolo> findByExample(Tavolo example);
 	
 	public Tavolo cercaPerDenominazione(String denominazione);
+	
+	public List<Tavolo> cercaMieiTavoli(Utente utenteInstance);
 }

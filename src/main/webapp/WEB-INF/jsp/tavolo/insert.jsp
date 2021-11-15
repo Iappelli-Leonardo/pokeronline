@@ -11,7 +11,7 @@
 	 	 <style>
 		    .error_field {
 		        color: red; 
-		    }
+		    }a
 		</style>
 	   
 	   <title>Inserisci Nuovo Elemento</title>
@@ -52,7 +52,7 @@
 					
 							
 								<div class="col-md-6">
-									<label for="nome" class="form-label">denominazione <span class="text-danger">*</span></label>
+									<label for="nome" class="form-label">Denominazione <span class="text-danger">*</span></label>
 									<spring:bind path="denominazione">
 									<input type="text" name="denominazione" id="denominazione" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire la denominazione" value="${insert_tavolo_attr.denominazione }" required>
 									</spring:bind>
@@ -74,6 +74,17 @@
 									<input type="number" class="form-control ${status.error ? 'is-invalid' : ''}" name="cifraMin" id="cifraMin" placeholder="Inserire la cifra Minima" value="${insert_tavolo_attr.cifraMin }" required>
 									</spring:bind>
 									<form:errors  path="cifraMin" cssClass="error_field" />
+								</div>
+								
+								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${insert_tavolo_attr.dataCreazione}' />
+								<div class="col-md-3">
+									<label for="dataCreazione" class="form-label">Data Creazione <span class="text-danger">*</span></label>
+                        			<spring:bind path="dataCreazione">
+	                        		<input class="form-control ${status.error ? 'is-invalid' : ''}" id="dataCreazione" type="date" placeholder="dd/MM/yy"
+	                            		title="formato : gg/mm/aaaa"  name="dataCreazione" required 
+	                            		value="${parsedDate}" >
+		                            </spring:bind>
+	                            	<form:errors  path="dataCreazione" cssClass="error_field" />
 								</div>
 								
 								

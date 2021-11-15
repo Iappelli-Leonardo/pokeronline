@@ -55,8 +55,9 @@
 				                <thead>
 				                    <tr>
 			                         	<th>Denominazione</th>
+			                         	<th>Data creazione</th>
 				                        <th>Esperienza minima</th>
-				                        <th>Cidra minima</th>
+				                        <th>Cifra minima</th>
 				                        <th>Azioni</th>
 				                    </tr>
 				                </thead>
@@ -64,6 +65,7 @@
 				                	<c:forEach items="${tavoli_list_attribute }" var="tavoloItem">
 										<tr>
 											<td>${tavoloItem.denominazione }</td>
+											<td><fmt:formatDate type = "date" value = "${tavoloItem.dataCreazione }" /></td>
 											<td>${tavoloItem.esperienzaMin }</td>
 											<td>${tavoloItem.cifraMin }</td>
 											

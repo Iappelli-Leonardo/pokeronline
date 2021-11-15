@@ -52,10 +52,11 @@ public class Tavolo {
 		this.creatore = creatore;
 	}
 	
-	public Tavolo(Long id, String denominazione, Integer esperienzaMin, Integer cifraMin) {
+	public Tavolo(Long id, String denominazione, Integer esperienzaMin, Integer cifraMin, Date dataCreazione) {
 		super();
 		this.id = id;
 		this.denominazione = denominazione;
+		this.dataCreazione = dataCreazione;
 		this.esperienzaMin = esperienzaMin;
 		this.cifraMin = cifraMin;
 	}
