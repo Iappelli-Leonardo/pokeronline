@@ -48,7 +48,7 @@ public class TavoloController {
 	public String findMieiTavoli(Model model, HttpServletRequest request) {
 		List<Tavolo> tavoli = tavoloService
 				.cercaMieiTavoli(utenteService.findByUsername(request.getUserPrincipal().getName()));
-		model.addAttribute("tavolo_list_attribute", tavoli);
+		model.addAttribute("tavoli_list_attribute", tavoli);
 		return "tavolo/list";
 	}
 
@@ -83,7 +83,6 @@ public class TavoloController {
 	}
 	@PostMapping("/list")
 	public String listTavoli(TavoloDTO tavoloExample, ModelMap model) {
-		System.out.println(tavoloExample);
 		List<Tavolo> tavoli = tavoloService.findByExample(tavoloExample.buildTavoloModel());
 		model.addAttribute("tavoli_list_attribute", TavoloDTO.createTavoloDTOListFromModelList(tavoli));
 		return "tavolo/list";

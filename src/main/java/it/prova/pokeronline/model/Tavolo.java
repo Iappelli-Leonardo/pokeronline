@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,56 +31,45 @@ public class Tavolo {
 	private Integer esperienzaMin;
 	@Column(name = "cifraMin")
 	private Integer cifraMin;
-	@Column(name = "creatore")
-	private String creatore;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tavolo")
-	private Set<Utente> utenti = new HashSet<Utente>(0);
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "creatore_id", nullable = false)
+	private Utente creatore;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tavoloGioco")
+	private Set<Utente> giocatori = new HashSet<Utente>();
 
 	public Tavolo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Tavolo(Long id, String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin,
-			Set<Utente> utenti, String creatore) {
+	public Tavolo(String denominazione, Date dataCreazione, int esperienzaMin, int cifraMin) {
+		super();
+		this.denominazione = denominazione;
+		this.dataCreazione = dataCreazione;
+		this.esperienzaMin = esperienzaMin;
+		this.cifraMin = cifraMin;
+	}
+
+	public Tavolo(Long id, String denominazione, Date dataCreazione, int esperienzaMin, int cifraMin,
+			Utente creatore, Set<Utente> giocatori) {
 		super();
 		this.id = id;
 		this.denominazione = denominazione;
 		this.dataCreazione = dataCreazione;
 		this.esperienzaMin = esperienzaMin;
 		this.cifraMin = cifraMin;
-		this.utenti = utenti;
 		this.creatore = creatore;
+		this.giocatori = giocatori;
 	}
-	
-	public Tavolo(Long id, String denominazione, Integer esperienzaMin, Integer cifraMin, Date dataCreazione) {
+
+	public Tavolo(Long id, String denominazione, Date dataCreazione, int esperienzaMin, int cifraMin) {
 		super();
 		this.id = id;
 		this.denominazione = denominazione;
 		this.dataCreazione = dataCreazione;
 		this.esperienzaMin = esperienzaMin;
 		this.cifraMin = cifraMin;
-	}
-
-	public Tavolo(String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin,
-			Set<Utente> utenti, String creatore) {
-		super();
-		this.denominazione = denominazione;
-		this.dataCreazione = dataCreazione;
-		this.esperienzaMin = esperienzaMin;
-		this.cifraMin = cifraMin;
-		this.utenti = utenti;
-		this.creatore = creatore;
-	}
-
-	public Tavolo(String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin, String creatore) {
-		super();
-		this.denominazione = denominazione;
-		this.dataCreazione = dataCreazione;
-		this.esperienzaMin = esperienzaMin;
-		this.cifraMin = cifraMin;	
-		this.creatore = creatore;
 	}
 
 	public Long getId() {
@@ -121,20 +112,22 @@ public class Tavolo {
 		this.cifraMin = cifraMin;
 	}
 
-	public Set<Utente> getUtenti() {
-		return utenti;
-	}
-
-	public void setUtenti(Set<Utente> utenti) {
-		this.utenti = utenti;
-	}
-
-	public String getCreatore() {
+	public Utente getCreatore() {
 		return creatore;
 	}
 
-	public void setCreatore(String creatore) {
+	public void setCreatore(Utente creatore) {
 		this.creatore = creatore;
 	}
+
+	public Set<Utente> getGiocatori() {
+		return giocatori;
+	}
+
+	public void setGiocatori(Set<Utente> giocatori) {
+		this.giocatori = giocatori;
+	}
+
 	
+
 }

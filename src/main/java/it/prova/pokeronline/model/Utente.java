@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -53,6 +54,9 @@ public class Utente {
 	@ManyToMany
 	@JoinTable(name = "utente_ruolo", joinColumns = @JoinColumn(name = "utente_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ruolo_id", referencedColumnName = "ID"))
 	private Set<Ruolo> ruoli = new HashSet<>(0);
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utenteCreatore")
+	private Set<Tavolo> tavoliCreati = new HashSet<Tavolo>();
 
 	public Utente() {
 	}
@@ -169,6 +173,7 @@ public class Utente {
 		this.stato = stato;
 	}
 
+	
 	public Utente(String username, String password, String nome, String cognome, Date dateCreated,
 			Integer esperienzaAccumulata, Integer creditoAccumulato) {
 		super();
@@ -267,6 +272,14 @@ public class Utente {
 
 	public void setRuoli(Set<Ruolo> ruoli) {
 		this.ruoli = ruoli;
+	}
+	
+	public Set<Tavolo> getTavoliCreati() {
+		return tavoliCreati;
+	}
+
+	public void setTavoliCreati(Set<Tavolo> tavoliCreati) {
+		this.tavoliCreati = tavoliCreati;
 	}
 
 	public boolean isAdmin() {

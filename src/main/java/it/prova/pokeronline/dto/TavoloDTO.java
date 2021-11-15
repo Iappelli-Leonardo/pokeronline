@@ -1,7 +1,9 @@
 package it.prova.pokeronline.dto;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.constraints.Min;
@@ -10,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import it.prova.pokeronline.model.Tavolo;
+import it.prova.pokeronline.model.Utente;
 
 public class TavoloDTO {
 	
@@ -31,13 +34,27 @@ public class TavoloDTO {
 	private Integer cifraMin;
 	
 	private UtenteDTO utenteCreatore;
+	
+	private Set<Utente> giocatori = new HashSet<Utente>();
 
 	public TavoloDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public TavoloDTO(Long id, String denominazione,Date dataCreazione, Integer esperienzaMin, Integer cifraMin) {
+	public TavoloDTO(Long id, String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin,
+			UtenteDTO utenteCreatore, Set<Utente> giocatori) {
+		super();
+		this.id = id;
+		this.denominazione = denominazione;
+		this.dataCreazione = dataCreazione;
+		this.esperienzaMin = esperienzaMin;
+		this.cifraMin = cifraMin;
+		this.utenteCreatore = utenteCreatore;
+		this.giocatori = giocatori;
+	}
+
+	public TavoloDTO(Long id, String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin) {
 		super();
 		this.id = id;
 		this.denominazione = denominazione;
@@ -45,7 +62,7 @@ public class TavoloDTO {
 		this.esperienzaMin = esperienzaMin;
 		this.cifraMin = cifraMin;
 	}
-	
+
 	public TavoloDTO(String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin) {
 		super();
 		this.denominazione = denominazione;
@@ -53,12 +70,7 @@ public class TavoloDTO {
 		this.esperienzaMin = esperienzaMin;
 		this.cifraMin = cifraMin;
 	}
-	
-	public TavoloDTO(Integer esperienzaMin, Integer cifraMin) {
-		super();
-		this.esperienzaMin = esperienzaMin;
-		this.cifraMin = cifraMin;
-	}
+
 
 	public Long getId() {
 		return id;
@@ -109,20 +121,32 @@ public class TavoloDTO {
 		this.utenteCreatore = utenteCreatore;
 	}
 
-	public Tavolo buildTavoloModel() {
-		return new Tavolo(this.id, this.denominazione, this.cifraMin ,this.esperienzaMin, this.dataCreazione);
+	public Set<Utente> getGiocatori() {
+		return giocatori;
+	}
+
+	public void setGiocatori(Set<Utente> giocatori) {
+		this.giocatori = giocatori;
 	}
 	
-	public static TavoloDTO buildTavoloDTOFromModel(Tavolo tavoloModel) {
-		return new TavoloDTO(tavoloModel.getId(), tavoloModel.getDenominazione(),tavoloModel.getDataCreazione(),
-				tavoloModel.getEsperienzaMin(), tavoloModel.getCifraMin());
-	}
 	
+	public static TavoloDTO buildTavoloDTOFromModel(Tavolo tavolo) {
+		return new TavoloDTO(tavolo.getId(), tavolo.getDenominazione(), tavolo.getDataCreazione(),
+				tavolo.getEsperienzaMin(), tavolo.getCifraMin(),
+				UtenteDTO.buildUtenteDTOFromModel(tavolo.getCreatore()), tavolo.getGiocatori());
+	}
+
 	public static List<TavoloDTO> createTavoloDTOListFromModelList(List<Tavolo> modelListInput) {
-		return modelListInput.stream().map(tavoloEntity -> {
-			return TavoloDTO.buildTavoloDTOFromModel(tavoloEntity);
+		return modelListInput.stream().map(registaEntity -> {
+			return TavoloDTO.buildTavoloDTOFromModel(registaEntity);
 		}).collect(Collectors.toList());
 	}
+
+	public Tavolo buildTavoloModel() {
+		return new Tavolo(this.id, this.denominazione, this.dataCreazione, this.esperienzaMin, this.cifraMin,
+				this.utenteCreatore.buildUtenteModel(false), this.giocatori);
+	}
+	
 
 
 }
