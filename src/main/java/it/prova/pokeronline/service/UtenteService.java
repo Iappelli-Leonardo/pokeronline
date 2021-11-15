@@ -34,4 +34,5 @@ public interface UtenteService {
 
 	public List<Utente> cercaByCognomENomeLike(String input);
 	
+	public void aggiungiCredito(String utente, int creditoDaAggiungere);
 }

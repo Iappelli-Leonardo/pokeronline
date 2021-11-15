@@ -130,6 +130,16 @@ public class UtenteServiceImpl implements UtenteService {
 		return repository.findByCognomeIgnoreCaseContainingOrNomeIgnoreCaseContainingOrderByNomeAsc(input, input);
 	}
 
+	@Transactional
+	public void aggiungiCredito(String utente, int creditoDaAggiungere) {
+		Utente utenteReloaded = repository.findByUsername(utente).get();
+		if(utenteReloaded == null)
+			throw new RuntimeException("Elemento non trovato");
+		utenteReloaded.setCreditoAccumulato(utenteReloaded.getCreditoAccumulato() + creditoDaAggiungere);
+		repository.save(utenteReloaded);
+		
+	}
+
 
 	
 

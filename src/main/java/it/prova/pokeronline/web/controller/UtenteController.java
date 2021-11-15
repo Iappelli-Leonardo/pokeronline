@@ -233,5 +233,25 @@ public class UtenteController {
 
 		return new Gson().toJson(ja);
 	}
+	
+
+	@GetMapping("/ricarica")
+	public String ricaricaCredito(Model model) {
+		return "utente/credito";
+	}
+	
+	@PostMapping("/aggiungiCredito")
+	public String aggiungiCredito(RedirectAttributes redirectAttrs, HttpServletRequest request,Model model) {
+		int creditoDaAggiungere = Integer.parseInt(request.getParameter("ricarica"));
+		String utenteInSessione = request.getUserPrincipal().getName();
+		if(creditoDaAggiungere <= 0) {
+			request.setAttribute("errorMessage", "Il credito inserito è negativo o pari a 0!");
+			return "utente/credito";
+		}else {
+			
+		utenteService.aggiungiCredito(utenteInSessione, creditoDaAggiungere);
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "index";
+	}}
 
 }

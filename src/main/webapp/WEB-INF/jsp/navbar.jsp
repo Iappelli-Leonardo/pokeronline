@@ -61,8 +61,8 @@
 					</a>
 			    <div class="dropdown-menu" aria-labelledby="dropdown01">
 			      <a style="text-align: center;" class="dropdown-item border-top" href="${pageContext.request.contextPath}/logout">logout</a>
-			      <a class="dropdown-item border-top"href="${pageContext.request.contextPath}/utente/resetuserpassword">ResetPassword</a>
-			      <a class="dropdown-item border-top"href="${pageContext.request.contextPath}/utente/resetuserpassword">Aggiungi credito</a>
+			      <a style="text-align: center;" class="dropdown-item border-top"href="${pageContext.request.contextPath}/utente/resetuserpassword">ResetPassword</a>
+			      <a style="text-align: center;" class="dropdown-item border-top"href="${pageContext.request.contextPath}/utente/ricarica">Aggiungi credito</a>
 			    </div>
 		    </div>
 		   </sec:authorize>
