@@ -33,8 +33,8 @@ public class Tavolo {
 	private Integer cifraMin;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "creatore_id", nullable = false)
-	private Utente creatore;
+	@JoinColumn(name = "utenteCreatore_id", nullable = false)
+	private Utente utenteCreatore;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tavoloGioco")
 	private Set<Utente> giocatori = new HashSet<Utente>();
@@ -52,14 +52,14 @@ public class Tavolo {
 	}
 
 	public Tavolo(Long id, String denominazione, Date dataCreazione, int esperienzaMin, int cifraMin,
-			Utente creatore, Set<Utente> giocatori) {
+			Utente utenteCreatore, Set<Utente> giocatori) {
 		super();
 		this.id = id;
 		this.denominazione = denominazione;
 		this.dataCreazione = dataCreazione;
 		this.esperienzaMin = esperienzaMin;
 		this.cifraMin = cifraMin;
-		this.creatore = creatore;
+		this.utenteCreatore = utenteCreatore;
 		this.giocatori = giocatori;
 	}
 
@@ -113,11 +113,11 @@ public class Tavolo {
 	}
 
 	public Utente getCreatore() {
-		return creatore;
+		return utenteCreatore;
 	}
 
-	public void setCreatore(Utente creatore) {
-		this.creatore = creatore;
+	public void setCreatore(Utente utenteCreatore) {
+		this.utenteCreatore = utenteCreatore;
 	}
 
 	public Set<Utente> getGiocatori() {

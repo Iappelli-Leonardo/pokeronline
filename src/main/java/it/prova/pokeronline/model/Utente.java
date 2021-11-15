@@ -46,23 +46,24 @@ public class Utente {
 	// se non uso questa annotation viene gestito come un intero
 	@Enumerated(EnumType.STRING)
 	private StatoUtente stato;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "tavolo_id")
-	private Tavolo tavolo;
 
 	@ManyToMany
 	@JoinTable(name = "utente_ruolo", joinColumns = @JoinColumn(name = "utente_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ruolo_id", referencedColumnName = "ID"))
 	private Set<Ruolo> ruoli = new HashSet<>(0);
-	
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tavolo_id")
+	private Tavolo tavoloGioco;
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utenteCreatore")
 	private Set<Tavolo> tavoliCreati = new HashSet<Tavolo>();
+
 
 	public Utente() {
 	}
 	
 	public Utente(Long id, String username, String password, String nome, String cognome, Date dateCreated,
-			Integer esperienzaAccumulata, Integer creditoAccumulato, StatoUtente stato, Tavolo tavolo,
+			Integer esperienzaAccumulata, Integer creditoAccumulato, StatoUtente stato, Tavolo tavoloGioco,
 			Set<Ruolo> ruoli) {
 		super();
 		this.id = id;
@@ -74,7 +75,7 @@ public class Utente {
 		this.esperienzaAccumulata = esperienzaAccumulata;
 		this.creditoAccumulato = creditoAccumulato;
 		this.stato = stato;
-		this.tavolo = tavolo;
+		this.tavoloGioco = tavoloGioco;
 		this.ruoli = ruoli;
 	}
 	
@@ -131,7 +132,7 @@ public class Utente {
 	}
 
 	public Utente(String username, String password, String nome, String cognome, Date dateCreated,
-			Integer esperienzaAccumulata, Integer creditoAccumulato, StatoUtente stato, Tavolo tavolo,
+			Integer esperienzaAccumulata, Integer creditoAccumulato, StatoUtente stato, Tavolo tavoloGioco,
 			Set<Ruolo> ruoli) {
 		super();
 		this.username = username;
@@ -142,12 +143,12 @@ public class Utente {
 		this.esperienzaAccumulata = esperienzaAccumulata;
 		this.creditoAccumulato = creditoAccumulato;
 		this.stato = stato;
-		this.tavolo = tavolo;
+		this.tavoloGioco = tavoloGioco;
 		this.ruoli = ruoli;
 	}
 
 	public Utente(String username, String password, String nome, String cognome, Date dateCreated,
-			Integer esperienzaAccumulata, Integer creditoAccumulato, StatoUtente stato, Tavolo tavolo) {
+			Integer esperienzaAccumulata, Integer creditoAccumulato, StatoUtente stato, Tavolo tavoloGioco) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -157,7 +158,7 @@ public class Utente {
 		this.esperienzaAccumulata = esperienzaAccumulata;
 		this.creditoAccumulato = creditoAccumulato;
 		this.stato = stato;
-		this.tavolo = tavolo;
+		this.tavoloGioco = tavoloGioco;
 	}
 
 	public Utente(String username, String password, String nome, String cognome, Date dateCreated,
@@ -258,12 +259,12 @@ public class Utente {
 		this.stato = stato;
 	}
 
-	public Tavolo getTavolo() {
-		return tavolo;
+	public Tavolo getTavoloGioco() {
+		return tavoloGioco;
 	}
 
-	public void setTavolo(Tavolo tavolo) {
-		this.tavolo = tavolo;
+	public void setTavoloGioco(Tavolo tavoloGioco) {
+		this.tavoloGioco = tavoloGioco;
 	}
 
 	public Set<Ruolo> getRuoli() {

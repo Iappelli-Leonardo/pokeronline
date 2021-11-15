@@ -58,7 +58,7 @@ public class TavoloServiceImpl implements TavoloService{
 
 	@Override
 	public List<Tavolo> cercaMieiTavoli(Utente utenteInstance) {
-		return tavoloRepository.findAllByCreatore_IdIs(utenteInstance.getId());
+		return tavoloRepository.findAllByUtenteCreatore_IdIs(utenteInstance.getId());
 	}
 
 }

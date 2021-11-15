@@ -9,6 +9,6 @@ import it.prova.pokeronline.model.Tavolo;
 public interface TavoloRepository extends CrudRepository<Tavolo, Long>, CustomTavoloRepository {
 	Tavolo findByDenominazione(String denominazione);
 	
-	List<Tavolo> findAllByCreatore_IdIs(Long id);
+	List<Tavolo> findAllByUtenteCreatore_IdIs(Long id);
 	
 }

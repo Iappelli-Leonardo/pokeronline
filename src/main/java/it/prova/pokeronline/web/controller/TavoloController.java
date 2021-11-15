@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -86,6 +87,14 @@ public class TavoloController {
 		List<Tavolo> tavoli = tavoloService.findByExample(tavoloExample.buildTavoloModel());
 		model.addAttribute("tavoli_list_attribute", TavoloDTO.createTavoloDTOListFromModelList(tavoli));
 		return "tavolo/list";
+	}
+
+	
+	@GetMapping("/show/{idTavolo}")
+	public String show(@PathVariable(required = true) Long idTavolo, Model model) {
+		Tavolo tavolo = tavoloService.caricaSingoloElemento(idTavolo);
+		model.addAttribute("show_tavolo_attr", tavolo);
+		return "tavolo/show";
 	}
 
 }
