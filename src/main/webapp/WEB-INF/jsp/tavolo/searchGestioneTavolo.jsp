@@ -64,9 +64,9 @@
 								<sec:authorize access="hasRole('ADMIN')">
 									<div class="col-md-6">
 										<label for="utenteCreatoreSearchInput" class="form-label">Creatore tavolo:</label>
-										<input class="form-control " type="text" id="utenteCreatoreId"
-												name="utenteCreatoreInput" value="${search_gestione_tavolo_attr.utenteCreatore.nome}">
-										<input type="hidden" name="utenteCreatore.id" id="utenteCreatoreId" value="${search_gestione_tavolo_attr.utenteCreatore.id}">
+										<input class="form-control " type="text" id="utenteCreatoreInputId"
+												name="utenteCreatoreInput" >
+										<input type="hidden" name="utenteCreatore.id" id="utenteCreatoreId" >
 									</div>
 								</sec:authorize>
 								
