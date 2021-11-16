@@ -67,7 +67,7 @@
 				      <div class="container-fluid py-5">
 				        <h1 class="display-5 fw-bold">Poker online</h1>
 				        <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. </p>
-				        <a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/regista/search">Vai a Ricerca</a>
+				        <a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/tavolo/search">Vai a Ricerca</a>
 				      </div>
 				      <div class="p-5" style="    display: flex;
 												    justify-content: center;

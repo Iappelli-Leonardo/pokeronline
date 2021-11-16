@@ -44,8 +44,8 @@
 		      <li class="nav-item dropdown">
 		        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestione Tavoli</a>
 		        <div class="dropdown-menu" aria-labelledby="dropdown01">
-		          <a class="dropdown-item" href="${pageContext.request.contextPath}/tavolo/search">Ricerca Tavoli</a>
-		          <a class="dropdown-item" href="${pageContext.request.contextPath}/tavolo/insert">Inserisci Tavolo</a>
+		          <a class="dropdown-item" href="${pageContext.request.contextPath}/tavolo/gestione">Ricerca miei Tavoli</a>
+		          <a class="dropdown-item" href="${pageContext.request.contextPath}/tavolo/insert">Inserisci mio Tavolo</a>
 		        	<a class="dropdown-item" href="${pageContext.request.contextPath}/tavolo/findMyTables">Miei tavoli</a>
 		     
 		        </div>
