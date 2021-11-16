@@ -11,7 +11,7 @@
 	   <script>
 			function caricaParametri(){
 				$.ajax({
-			        url: "${pageContext.request.contextPath }/utente/caricaParametri",
+			        url: "${pageContext.request.contextPath }/addCredito/caricaParametri",
 			        type: 'GET',
 			        dataType: 'json',
 			        success: function(res) {

@@ -18,6 +18,10 @@ public interface UtenteRepository extends CrudRepository<Utente, Long>, CustomUt
 	@Query("from Utente u left join fetch u.ruoli where u.id = ?1")
 	Optional<Utente> findByIdConRuoli(Long id);
 	
+	
+	@Query("from Utente u left join fetch u.ruoli where u.username like ?1")
+	Optional<Utente> findByUsernameConRuoli(String user);
+	
 	Utente findByUsernameAndPassword(String username, String password);
 	
 	//caricamento eager, ovviamente si può fare anche con jpql

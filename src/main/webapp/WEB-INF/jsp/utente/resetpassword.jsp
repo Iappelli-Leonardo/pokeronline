@@ -39,7 +39,7 @@
 		
 							<h6 class="card-title">I campi con <span class="text-danger">*</span> sono obbligatori</h6>
 							
-							<form action="${pageContext.request.contextPath}/utente/saveresetuserpw" method="post">
+							<form action="${pageContext.request.contextPath}/addCredito/saveresetuserpw" method="post">
 								<div class="col-md-3">
 									<label class="form-label">Vecchia Password <span class="text-danger">*</span></label>
 										<input type="password" class="form-control ${status.error ? 'is-invalid' : ''}" name="oldpassword" id="oldpassword" placeholder="Inserire Ultima Password"  required>
@@ -54,7 +54,7 @@
 									<label for="confermaPassword" class="form-label">Conferma Password <span class="text-danger">*</span></label>
 										<input type="password" class="form-control ${status.error ? 'is-invalid' : ''}" name="confermaPassword" id="confermaPassword" placeholder="Confermare Password"  required>
 								</div>
-								
+								<br>
 								<div class="col-12">
 									<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
 									<input class="btn btn-outline-warning" type="reset" value="Ripulisci">

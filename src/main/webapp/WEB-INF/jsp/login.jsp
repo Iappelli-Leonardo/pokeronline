@@ -24,7 +24,11 @@
 				  ${infoMessage}
 				</div>
 				
-				
+				<div class="alert alert-success alert-dismissible fade show  ${successMessage==null?'d-none':'' }" role="alert">
+			  		${successMessage}
+			 		 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
+				</div>
+			
 			  	<img class="mb-4" src="./assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
 				<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 		    	

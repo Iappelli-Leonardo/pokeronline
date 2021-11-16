@@ -32,9 +32,9 @@
 								</div>
 								
 								<div class="col-md-6">
-									<label for="dateCreated" class="form-label">Data di Creazione</label>
-	                        		<input class="form-control" id="dateCreated" type="date" placeholder="dd/MM/yy"
-	                            		title="formato : gg/mm/aaaa"  name="dateCreated" value="${search_tavolo_attr.dateCreated}">
+									<label for="dataCreazione" class="form-label">Data di Creazione</label>
+	                        		<input class="form-control" id="dataCreazione" type="date" placeholder="dd/MM/yy"
+	                            		title="formato : gg/mm/aaaa"  name="dateCreated" value="${search_tavolo_attr.dataCreazione}">
 								</div>
 								
 								<div class="col-md-6">

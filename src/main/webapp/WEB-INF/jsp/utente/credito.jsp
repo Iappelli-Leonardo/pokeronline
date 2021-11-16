@@ -46,7 +46,7 @@
 		
 							<h6 class="card-title">I campi con <span class="text-danger">*</span> sono obbligatori</h6>
 						
-							<form:form modelAttribute="edit_utente_attr" method="post" action="${pageContext.request.contextPath}/utente/aggiungiCredito" novalidate="novalidate" class="row g-3">
+							<form:form modelAttribute="edit_utente_attr" method="post" action="${pageContext.request.contextPath}/addCredito/aggiungiCredito" novalidate="novalidate" class="row g-3">
 								<div class="col-md-6">
 								
 									<label for="nome" class="form-label">Ricarica <span class="text-danger">*</span></label>

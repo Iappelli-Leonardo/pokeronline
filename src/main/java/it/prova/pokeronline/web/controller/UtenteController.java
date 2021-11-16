@@ -6,8 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -70,7 +68,7 @@ public class UtenteController {
 		model.addAttribute("utente_list_attribute", utenti);
 		return "utente/list";
 	}
-
+	
 	@GetMapping("/insert")
 	public String create(Model model) {
 		model.addAttribute("mappaRuoliConSelezionati_attr", UtilityForm
@@ -179,33 +177,6 @@ public class UtenteController {
 		return "redirect:/utente";
 	}
 
-	@GetMapping("/resetuserpassword")
-	public String resetUserPassword(Model model) {
-
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		model.addAttribute("resetpw_utente_attr",
-				UtenteDTO.buildUtenteDTOFromModel(utenteService.findByUsername(userDetails.getUsername())));
-		return "utente/resetpassword";
-	}
-
-	@PostMapping("/saveresetuserpw")
-	public String saveResetUserPw(RedirectAttributes redirectAttrs, HttpServletRequest request) {
-
-		String vecchiaPassword = request.getParameter("oldpassword");
-		String nuovaPassword = request.getParameter("password");
-		String confermaPassword = request.getParameter("confermaPassword");
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String usernameUtenteSessione = userDetails.getUsername();
-
-		Utente utenteInSessione = utenteService.findByUsername(usernameUtenteSessione);
-
-		utenteService.cambiaPassword(nuovaPassword, vecchiaPassword, confermaPassword, utenteInSessione);
-
-		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
-		return "redirect:/logout";
-	}
-
 	@GetMapping(value = "/searchUtentiAjax", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody String searchTavolo(@RequestParam String term) {
 
@@ -226,42 +197,4 @@ public class UtenteController {
 		return new Gson().toJson(ja);
 	}
 	
-
-	@GetMapping("/ricarica")
-	public String ricaricaCredito(Model model) {
-		return "utente/credito";
-	}
-	
-	@PostMapping("/aggiungiCredito")
-	public String aggiungiCredito(RedirectAttributes redirectAttrs, HttpServletRequest request,Model model) {
-		int creditoDaAggiungere = Integer.parseInt(request.getParameter("ricarica"));
-		String utenteInSessione = request.getUserPrincipal().getName();
-		if(creditoDaAggiungere <= 0) {
-			request.setAttribute("errorMessage", "Il credito inserito è negativo o pari a 0!");
-			return "utente/credito";
-		}else {
-			
-		utenteService.aggiungiCredito(utenteInSessione, creditoDaAggiungere);
-		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
-		return "index";
-		}
-	}
-	
-	private String buildJsonResponseSingleUser(Utente utente) {
-		JsonArray ja = new JsonArray();
-
-		JsonObject jo = new JsonObject();
-		jo.addProperty("credito", utente.getCreditoAccumulato());
-		jo.addProperty("exp", utente.getEsperienzaAccumulata());
-		ja.add(jo);
-
-		return new Gson().toJson(ja);
-	}
-	
-	@GetMapping("/caricaParametri")
-	public @ResponseBody String caricaParametri(HttpServletRequest request) {
-		
-		Utente utente = utenteService.findByUsername(request.getUserPrincipal().getName());
-		return buildJsonResponseSingleUser(utente);
-	}
 }

@@ -35,7 +35,7 @@ public class TavoloController {
 	private TavoloService tavoloService;
 	
 	@Autowired
-	UtenteService utenteService;
+	private UtenteService utenteService;
 	
 	@GetMapping
 	public ModelAndView listAllRegisti() {
@@ -85,6 +85,13 @@ public class TavoloController {
 	
 	@PostMapping("/list")
 	public String listTavoli(TavoloDTO tavoloExample, ModelMap model) {
+		List<Tavolo> tavoli = tavoloService.findByExample(tavoloExample.buildTavoloModel());
+		model.addAttribute("tavoli_list_attribute", TavoloDTO.createTavoloDTOListFromModelList(tavoli));
+		return "tavolo/list";
+	}
+	
+	@PostMapping("/list")
+	public String listaTavoli(TavoloDTO tavoloExample, ModelMap model) {
 		List<Tavolo> tavoli = tavoloService.findByExample(tavoloExample.buildTavoloModel());
 		model.addAttribute("tavoli_list_attribute", TavoloDTO.createTavoloDTOListFromModelList(tavoli));
 		return "tavolo/list";
@@ -153,8 +160,17 @@ public class TavoloController {
 
 		List<Tavolo> tavoli = tavoloService.cercaMieiTavoli(utenteService.findByUsername(request.getUserPrincipal().getName()));
 		model.addAttribute("tavoli_list_attribute", tavoli);
-
 	
+		return "tavolo/list";
+	}
+	
+	@PostMapping("/listGestione")
+	public String listGestione(@ModelAttribute("search_gestione_tavolo_attr") TavoloDTO tavoloDTO, Model model,
+			RedirectAttributes redirectAttrs, HttpServletRequest request) {
+		
+		List<Tavolo> tavoli = tavoloService.findByExampleGestione(tavoloDTO, request.getUserPrincipal().getName());
+
+		model.addAttribute("tavolo_list_attribute", TavoloDTO.createTavoloDTOListFromModelList(tavoli));
 		return "tavolo/list";
 	}
 

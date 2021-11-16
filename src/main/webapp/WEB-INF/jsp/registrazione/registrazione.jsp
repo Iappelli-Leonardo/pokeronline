@@ -15,9 +15,6 @@
 	   <title>Inserisci Nuovo Elemento</title>
 	 </head>
 	   <body class="d-flex flex-column h-100">
-	   
-	   		<!-- Fixed navbar -->
-	   		<jsp:include page="../navbar.jsp"></jsp:include>
 			
 			<!-- Begin page content -->
 			<main class="flex-shrink-0">
@@ -86,7 +83,9 @@
 									</spring:bind>
 									<form:errors  path="confermaPassword" cssClass="error_field" />
 								</div>
-						
+								<input type="hidden" name="esperienzaAccumulata" value="${0}"> 
+								<input type="hidden" name="creditoAccumulato" value="${0}"> 
+							
 								<div class="col-12">
 									<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
 									<input class="btn btn-outline-warning" type="reset" value="Ripulisci">

@@ -7,60 +7,46 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import it.prova.pokeronline.dto.RuoloDTO;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import it.prova.pokeronline.dto.UtenteDTO;
 import it.prova.pokeronline.model.Utente;
-import it.prova.pokeronline.service.RuoloService;
 import it.prova.pokeronline.service.UtenteService;
-import it.prova.pokeronline.utility.UtilityForm;
-import it.prova.pokeronline.validation.ValidationNoPassword;
-import it.prova.pokeronline.validation.ValidationWithPassword;
 
 @Controller
-@RequestMapping(value = "/autoRegistrazione")
-public class AutoRegistrazione {
+@RequestMapping(value = "/addCredito")
+public class AddCredito {
 	
 	@Autowired
 	private UtenteService utenteService;
 	
-	@Autowired
-	private RuoloService ruoloService;
-	
-	@GetMapping("/autoReg")
-	public String autoInsert(Model model) {
-		model.addAttribute("insert_utente_attr", new UtenteDTO());
-		return "/registrazione/registrazione";
+	@GetMapping("/ricarica")
+	public String ricaricaCredito(Model model) {
+		return "utente/credito";
 	}
 	
-	@PostMapping("/save")
-	public String saveReg(
-			@Validated({ ValidationWithPassword.class,
-					ValidationNoPassword.class }) @ModelAttribute("insert_utente_attr") UtenteDTO utenteDTO,
-			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
-		if (!result.hasFieldErrors("password") && !utenteDTO.getPassword().equals(utenteDTO.getConfermaPassword()))
-			result.rejectValue("confermaPassword", "password.diverse");
-
-		if (result.hasErrors()) {
-			model.addAttribute("mappaRuoliConSelezionati_attr", UtilityForm.buildCheckedRolesForPages(
-					RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()), utenteDTO.getRuoliIds()));
-			return "/autoRegistrazione/autoReg";
+	@PostMapping("/aggiungiCredito")
+	public String aggiungiCredito(RedirectAttributes redirectAttrs, HttpServletRequest request,Model model) {
+		int creditoDaAggiungere = Integer.parseInt(request.getParameter("ricarica"));
+		String utenteInSessione = request.getUserPrincipal().getName();
+		if(creditoDaAggiungere <= 0) {
+			request.setAttribute("errorMessage", "Il credito inserito è negativo o pari a 0!");
+			return "utente/credito";
+		}else {
+			
+		utenteService.aggiungiCredito(utenteInSessione, creditoDaAggiungere);
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "index";
 		}
-		if(utenteService.findByUsername(utenteDTO.getUsername()) == null) {
-			utenteService.inserisciNuovo(utenteDTO.buildUtenteModel(true));
-
-			redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
-			return "redirect:/login";
-		}else
-			redirectAttrs.addFlashAttribute("errorMessage", "Operazione eseguita correttamente");
-			return "/registrazione/registrazione";
+	
 	}
 	
 	@GetMapping("/resetuserpassword")
@@ -89,6 +75,25 @@ public class AutoRegistrazione {
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/logout";
 	}
+	
+	
+	private String buildJsonResponseSingleUser(Utente utente) {
+		JsonArray ja = new JsonArray();
 
+		JsonObject jo = new JsonObject();
+		jo.addProperty("credito", utente.getCreditoAccumulato());
+		jo.addProperty("exp", utente.getEsperienzaAccumulata());
+		ja.add(jo);
+
+		return new Gson().toJson(ja);
+	}
+	
+	//per passare i paramentri all'index.jsp e mostrare il credito e l'esperienza1
+	@GetMapping("/caricaParametri")
+	public @ResponseBody String caricaParametri(HttpServletRequest request) {
+		
+		Utente utente = utenteService.findByUsername(request.getUserPrincipal().getName());
+		return buildJsonResponseSingleUser(utente);
+	}
 
 }

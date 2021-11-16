@@ -47,4 +47,5 @@ public class RuoloServiceImpl implements RuoloService {
 		return ruoloRepository.findByDescrizioneAndCodice(descrizione, codice);
 	}
 
+
 }
