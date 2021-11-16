@@ -83,7 +83,7 @@
 								$("#utenteCreatoreId").autocomplete({
 									 source: function(request, response) {
 									        $.ajax({
-									            url: "${pageContext.request.contextPath }/user/searchUtentiAjax",
+									            url: "${pageContext.request.contextPath }/utente/searchUtentiAjax",
 									            datatype: "json",
 									            data: {
 									                term: request.term,   
@@ -100,7 +100,7 @@
 									    },
 									//quando seleziono la voce nel campo deve valorizzarsi la descrizione
 								    focus: function(event, ui) {
-								        $("#utenteCreatoreId").val(ui.item.label)
+								        $("#inputUtenteCreatoreId").val(ui.item.label)
 								        return false
 								    },
 								    minLength: 2,
