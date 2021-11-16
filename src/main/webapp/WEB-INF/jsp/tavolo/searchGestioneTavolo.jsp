@@ -64,10 +64,10 @@
 								<sec:authorize access="hasRole('ADMIN')">
 									<div class="col-md-6">
 										<label for="utenteCreatoreSearchInput" class="form-label">Creatore tavolo:</label>
-										<input class="form-control " type="text" id="utenteCreatoreInputId"
+										<input class="form-control " type="text" id="utenteCreatoreSearchInput"
 												name="utenteCreatoreInput" >
 										<input type="hidden" name="utenteCreatore.id" id="utenteCreatoreId" >
-									</div>
+								</div>
 								</sec:authorize>
 								
 									
@@ -80,7 +80,7 @@
 							</form>
 		
 				    		<script>
-								$("#utenteCreatoreId").autocomplete({
+								$("#utenteCreatoreSearchInput").autocomplete({
 									 source: function(request, response) {
 									        $.ajax({
 									            url: "${pageContext.request.contextPath }/utente/searchUtentiAjax",
@@ -99,8 +99,8 @@
 									        })
 									    },
 									//quando seleziono la voce nel campo deve valorizzarsi la descrizione
-								    focus: function(event, ui) {
-								        $("#inputUtenteCreatoreId").val(ui.item.label)
+								   focus: function(event, ui) {
+								        $("#utenteCreatoreSearchInput").val(ui.item.label)
 								        return false
 								    },
 								    minLength: 2,

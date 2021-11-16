@@ -75,7 +75,7 @@
 			    </div>
 			    
 			    <div class='card-footer' style="display: -webkit-inline-box">
-					<form action="${pageContext.request.contextPath}/gioco/partita/${show_tavolo_attr.id}" method="post">
+					<form action="${pageContext.request.contextPath}/gioco/giocaPoker/${show_tavolo_attr.id}" method="post">
 						  <button type="submit" name="submit" id="submit" class="btn btn-primary">Gioca</button>
 				    </form> &nbsp;&nbsp;
 				    <form action="${pageContext.request.contextPath}/gioco/exit/${show_tavolo_attr.id}" method="post">

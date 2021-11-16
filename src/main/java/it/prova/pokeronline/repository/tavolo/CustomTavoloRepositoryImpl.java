@@ -30,8 +30,7 @@ public class CustomTavoloRepositoryImpl implements CustomTavoloRepository{
 		if (example.getCifraMin() == null)
 			example.setCifraMin(1);
 
-		StringBuilder queryBuilder = new StringBuilder(
-				"select distinct r from Tavolo r join fetch r.utenteCreatore uc left join fetch r.giocatori gio where r.id = r.id ");
+		StringBuilder queryBuilder = new StringBuilder("select distinct r from Tavolo r join fetch r.utenteCreatore uc left join fetch r.giocatori gio where r.id = r.id ");
 
 		if (StringUtils.isNotBlank(example.getDenominazione())) {
 			whereClauses.add(" r.denominazione  like :denominazione ");

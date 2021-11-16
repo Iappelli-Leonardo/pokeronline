@@ -18,6 +18,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import it.prova.pokeronline.dto.UtenteDTO;
+import it.prova.pokeronline.model.Tavolo;
 import it.prova.pokeronline.model.Utente;
 import it.prova.pokeronline.service.UtenteService;
 
@@ -95,5 +96,18 @@ public class AddCredito {
 		Utente utente = utenteService.findByUsername(request.getUserPrincipal().getName());
 		return buildJsonResponseSingleUser(utente);
 	}
+	
+	@GetMapping("/goToMyLastGame")
+	public String goToMyLastGame(Model model, HttpServletRequest request) {
+		Utente utente = utenteService.findByUsername(request.getUserPrincipal().getName());
+		Tavolo tavoloPerGiocare = utente.getTavoloGioco();
+
+		if (utente.getTavoloGioco() == null)
+			return "index";
+
+		model.addAttribute("show_tavolo_attr", tavoloPerGiocare);
+		return "gioca/gioca";
+	}
+
 
 }

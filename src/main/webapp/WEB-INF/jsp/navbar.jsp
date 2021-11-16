@@ -61,6 +61,7 @@
 					</a>
 					
 			    <div class="dropdown-menu" aria-labelledby="dropdown01">
+			      <a class="dropdown-item" href="${pageContext.request.contextPath}/addCredito/goToMyLastGame">Torna al tavolo</a>
 			      <a style="text-align: center;" class="dropdown-item border-top" href="${pageContext.request.contextPath}/logout">logout</a>
 			      <a style="text-align: center;" class="dropdown-item border-top"href="${pageContext.request.contextPath}/addCredito/resetuserpassword">ResetPassword</a>
 			      <a style="text-align: center;" class="dropdown-item border-top"href="${pageContext.request.contextPath}/addCredito/ricarica">Aggiungi credito</a>

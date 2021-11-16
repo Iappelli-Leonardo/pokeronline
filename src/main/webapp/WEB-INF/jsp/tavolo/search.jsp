@@ -101,7 +101,7 @@
 									    },
 									//quando seleziono la voce nel campo deve valorizzarsi la descrizione
 								   focus: function(event, ui) {
-								        $("#utenteCreatoreInputId").val(ui.item.label)
+								        $("#utenteCreatoreSearchInput").val(ui.item.label)
 								        return false
 								    },
 								    minLength: 2,

@@ -39,6 +39,7 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
          .antMatchers("/login").permitAll()
          .antMatchers("/autoRegistrazione/**").permitAll()
          .antMatchers("/utente/searchUtentiAjax").hasAnyRole("ADMIN", "PLAYER", "SPECIAL_PLAYER")
+         .antMatchers("/tavolo/**").hasAnyRole("ADMIN", "PLAYER", "SPECIAL_PLAYER")
          .antMatchers("/gioco/**").permitAll()
          .antMatchers("/addCredito/aggiungiCredito").hasAnyRole("ADMIN", "PLAYER", "SPECIAL_PLAYER")
          .antMatchers("/addCredito/**").hasAnyRole("ADMIN", "PLAYER", "SPECIAL_PLAYER")
