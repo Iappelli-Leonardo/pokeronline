@@ -1,6 +1,7 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!doctype html>
 <html lang="it" class="h-100" >
 	 <head>
@@ -15,44 +16,37 @@
 	 
 		<!-- Fixed navbar -->
 		<jsp:include page="../navbar.jsp"></jsp:include>
+	 
 	
 		<!-- Begin page content -->
 		<main class="flex-shrink-0">
 		  <div class="container">
 		  
-		  <div class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none':'' }" role="alert">
-				  ${errorMessage}
-				  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
-				</div>
 		  		<div class="alert alert-success alert-dismissible fade show  ${successMessage==null?'d-none':'' }" role="alert">
 				  ${successMessage}
 				  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
 				</div>
-				<div class="alert alert-danger alert-dismissible fade show d-none" role="alert">
-				  Esempio di operazione fallita!
+				<div class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none':'' }" role="alert">
+				  ${errorMessage}
 				  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
 				</div>
-				<div class="alert alert-info alert-dismissible fade show d-none" role="alert">
-				  Aggiungere d-none nelle class per non far apparire
-				   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
-				</div>
+		  
+		  
 		  
 		  		<div class='card'>
 				    <div class='card-header'>
-				        <h5>Lista dei risultati</h5> 
+				        <h5>Lista dei miei risultati</h5> 
 				    </div>
 				    <div class='card-body'>
+				     <sec:authorize access="hasRole('SPECIAL_PLAYER') || hasRole('ADMIN')">
 				    	<a class="btn btn-primary " href="${pageContext.request.contextPath}/tavolo/insert">Add New</a>
-				    	<a href="${pageContext.request.contextPath }/tavolo/gestione" class='btn btn-outline-secondary' >
-				            <i class='fa fa-chevron-left'></i> Torna alla Ricerca
-				        </a>
-				    
+				       </sec:authorize>
 				        <div class='table-responsive'>
 				            <table class='table table-striped ' >
 				                <thead>
 				                    <tr>
 			                         	<th>Denominazione</th>
-			                         	<th>Data creazione</th>
+				                        <th>Data Creazione</th>
 				                        <th>Esperienza minima</th>
 				                        <th>Cifra minima</th>
 				                        <th>Azioni</th>
@@ -65,11 +59,9 @@
 											<td><fmt:formatDate type = "date" value = "${tavoloItem.dataCreazione }" /></td>
 											<td>${tavoloItem.esperienzaMin }</td>
 											<td>${tavoloItem.cifraMin }</td>
-											 <td>
-												<a class="btn  btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/tavolo/show/${tavoloItem.id }">Visualizza</a>
-												<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/tavolo/edit/${tavoloItem.id }">Edit</a>
-												<a class="btn btn-outline-danger btn-sm" href="${pageContext.request.contextPath}/tavolo/delete/${tavoloItem.id }">Delete</a>
-											</td> 
+											<td>
+												<a class="btn  btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/gioco/show/${tavoloItem.id }">Visualizza il tavolo</a>
+											</td>
 										</tr>
 									</c:forEach>
 				                </tbody>

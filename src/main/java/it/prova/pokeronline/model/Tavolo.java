@@ -123,6 +123,14 @@ public class Tavolo {
 		this.cifraMin = cifraMin;
 	}
 
+	public Utente getUtenteCreatore() {
+		return utenteCreatore;
+	}
+
+	public void setUtenteCreatore(Utente utenteCreatore) {
+		this.utenteCreatore = utenteCreatore;
+	}
+
 	public Utente getCreatore() {
 		return utenteCreatore;
 	}

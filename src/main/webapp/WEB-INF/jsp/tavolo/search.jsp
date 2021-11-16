@@ -4,6 +4,17 @@
 <html lang="it" class="h-100">
 	<head>
 		<jsp:include page="../header.jsp" />
+		
+		<link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/jqueryUI/jquery-ui.min.css" />
+		<style>
+			.ui-autocomplete-loading {
+				background: white url("../assets/img/jqueryUI/anim_16x16.gif") right center no-repeat;
+			}
+			.error_field {
+		        color: red; 
+		    }
+		</style>
+		
 		<title>Ricerca</title>
 	</head>
 	<body class="d-flex flex-column h-100">
@@ -24,37 +35,41 @@
 				    </div>
 				    <div class='card-body'>
 		
-							<form method="post" action="list" class="row g-3">
+							<form method="post" action="${pageContext.request.contextPath }/tavolo/list" class="row g-3">
 							
 								<div class="col-md-6">
 									<label for="denominazione" class="form-label">Denominazione</label>
-									<input type="text" name="denominazione" id="denominazione" class="form-control" placeholder="Inserire denominazione" value="${search_tavolo_attr.denominazione}">
+									<input type="text" name="denominazione" id="denominazione" class="form-control" placeholder="Inserire denominazione" >
 								</div>
 								
 								<div class="col-md-6">
 									<label for="dataCreazione" class="form-label">Data di Creazione</label>
 	                        		<input class="form-control" id="dataCreazione" type="date" placeholder="dd/MM/yy"
-	                            		title="formato : gg/mm/aaaa"  name="dateCreated" value="${search_tavolo_attr.dataCreazione}">
+	                            		title="formato : gg/mm/aaaa"  name="dateCreated" >
 								</div>
 								
 								<div class="col-md-6">
 									<label for="cifraMin" class="form-label">Cifra minima</label>
-									<input type="number" name="cifraMin" id="cifraMin" class="form-control" placeholder="Inserire cifra minima" value="${search_tavolo_attr.cifraMin}">
+									<input type="number" name="cifraMin" id="cifraMin" class="form-control" placeholder="Inserire cifra minima" >
 								</div>
 								
 								<div class="col-md-6">
 									<label for="esperienzaMin" class="form-label">Esperienza minima</label>
-									<input type="number" class="form-control" name="esperienzaMin" id="esperienzaMin" placeholder="Inserire esperienza minima" value="${search_tavolo_attr.esperienzaMin}">
+									<input type="number" class="form-control" name="esperienzaMin" id="esperienzaMin" placeholder="Inserire esperienza minima" >
 								</div>
-								
-								<sec:authorize access="hasRole('ADMIN')">
-									<div class="col-md-6">
+								<div class="col-md-6">
 										<label for="utenteCreatoreSearchInput" class="form-label">Creatore tavolo:</label>
 										<input class="form-control " type="text" id="utenteCreatoreSearchInput"
-												name="utenteCreatoreInput" value="${search_tavolo_attr.utenteCreatore.nome}${search_tavolo_attr.utenteCreatore.cognome}">
-										<input type="hidden" name="utenteCreatore.id" id="utenteCreatoreId" value="${search_tavolo_attr.utenteCreatore.id}">
-									</div>
-								</sec:authorize>
+												name="utenteCreatoreInput" >
+										<input type="hidden" name="utenteCreatore.id" id="utenteCreatoreId" >
+								</div>
+									
+								<div class="col-md-6">
+									<label for="utenteGiocatoreSearchInput" class="form-label">Giocatori:</label>
+									<input class="form-control " type="text" id="utenteGiocatoreSearchInput"
+											name="utenteGiocatoreSearchInput" >
+									<input type="hidden" name="giocatoreCercato.id" id="utenteGiocatoreSearchInputId" >
+								</div>
 								
 									
 								<div class="col-12">
@@ -85,14 +100,48 @@
 									        })
 									    },
 									//quando seleziono la voce nel campo deve valorizzarsi la descrizione
-								    focus: function(event, ui) {
-								        $("#utenteCreatoreSearchInput").val(ui.item.label)
+								   focus: function(event, ui) {
+								        $("#utenteCreatoreInputId").val(ui.item.label)
 								        return false
 								    },
 								    minLength: 2,
 								    //quando seleziono la voce nel campo hidden deve valorizzarsi l'id
 								    select: function( event, ui ) {
-								    	$('#utenteCreatoreSearchInputId').val(ui.item.value);
+								    	$('#utenteCreatoreId').val(ui.item.value);
+								    	//console.log($('#registaId').val())
+								        return false;
+								    }
+								});
+							</script>
+							
+							<script>
+								$("#utenteGiocatoreSearchInput").autocomplete({
+									 source: function(request, response) {
+									        $.ajax({
+									            url: "${pageContext.request.contextPath }/utente/searchUtentiAjax",
+									            datatype: "json",
+									            data: {
+									                term: request.term,   
+									            },
+									            success: function(data) {
+									                response($.map(data, function(item) {
+									                    return {
+										                    label: item.label,
+										                    value: item.value
+									                    }
+									                }))
+									            }
+									        })
+									    },
+									//quando seleziono la voce nel campo deve valorizzarsi la descrizione
+								    focus: function(event, ui) {
+								        $("#utenteGiocatoreSearchInput").val(ui.item.label)
+								        return false
+								    },
+								    minLength: 2,
+								    //quando seleziono la voce nel campo hidden deve valorizzarsi l'id
+								    select: function( event, ui ) {
+								    	$('#utenteGiocatoreSearchInputId').val(ui.item.value);
 								    	//console.log($('#registaId').val())
 								        return false;
 								    }

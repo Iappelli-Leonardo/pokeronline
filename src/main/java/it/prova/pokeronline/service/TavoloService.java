@@ -23,7 +23,7 @@ public interface TavoloService {
 	
 	public void rimuoviById(Long id);
 	
-	public List<Tavolo> findByExample(Tavolo example);
+	public List<Tavolo> findByExample(TavoloDTO example);
 	
 	public Tavolo cercaPerDenominazione(String denominazione);
 	

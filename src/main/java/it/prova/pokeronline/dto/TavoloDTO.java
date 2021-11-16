@@ -50,12 +50,25 @@ public class TavoloDTO {
 	}
 	
 
-	public TavoloDTO(Long id,String denominazione,Integer esperienzaMin, Integer cifraMin) {
+	public TavoloDTO(Long id,String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin) {
 		super();
 		this.id = id;
 		this.denominazione = denominazione;
+		this.dataCreazione = dataCreazione;
 		this.esperienzaMin = esperienzaMin;
 		this.cifraMin = cifraMin;
+	}
+	
+	public TavoloDTO(Long id, String denominazione, Date dataCreazione, Integer esperienzaMin, Integer cifraMin,
+			UtenteDTO utenteCreatore, Set<Utente> giocatori) {
+		super();
+		this.id = id;
+		this.denominazione = denominazione;
+		this.dataCreazione = dataCreazione;
+		this.esperienzaMin = esperienzaMin;
+		this.cifraMin = cifraMin;
+		this.utenteCreatore = utenteCreatore;
+		this.giocatori = giocatori;
 	}
 
 	public Long getId() {
@@ -123,15 +136,13 @@ public class TavoloDTO {
 	}
 
 	public Tavolo buildTavoloModel() {
-		return new Tavolo(this.id, this.denominazione, this.dataCreazione, this.esperienzaMin, this.cifraMin, this.utenteCreatore.buildUtenteModel(false));
+		return new Tavolo(this.id, this.denominazione, this.dataCreazione, this.esperienzaMin, this.cifraMin, this.utenteCreatore.buildUtenteModel(true));
 	}
 
-	public static TavoloDTO buildTavoloDTOFromModel(Tavolo tavoloModel) {
-		TavoloDTO result = new TavoloDTO(tavoloModel.getId(), tavoloModel.getDenominazione(),
-				tavoloModel.getEsperienzaMin(), tavoloModel.getCifraMin());
-
-
-		return result;
+	public static TavoloDTO buildTavoloDTOFromModel(Tavolo tavolo) {
+		return new TavoloDTO(tavolo.getId(), tavolo.getDenominazione(), tavolo.getDataCreazione(),
+				tavolo.getEsperienzaMin(), tavolo.getCifraMin(),
+				UtenteDTO.buildUtenteDTOFromModel(tavolo.getUtenteCreatore()), tavolo.getGiocatori());
 	}
 
 	public static List<TavoloDTO> createTavoloDTOListFromModelList(List<Tavolo> modelListInput) {

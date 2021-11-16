@@ -54,8 +54,7 @@ public class TavoloController {
 	}
 	@GetMapping("/findMyTables")
 	public String findMieiTavoli(Model model, HttpServletRequest request) {
-		List<Tavolo> tavoli = tavoloService
-				.cercaMieiTavoli(utenteService.findByUsername(request.getUserPrincipal().getName()));
+		List<Tavolo> tavoli = tavoloService.cercaMieiTavoli(utenteService.findByUsername(request.getUserPrincipal().getName()));
 		model.addAttribute("tavoli_list_attribute", tavoli);
 		return "tavolo/list";
 	}
@@ -84,26 +83,17 @@ public class TavoloController {
 		return "redirect:/tavolo/findMyTables";	}
 	
 	@GetMapping("/search")
-	public String searchTavolo(ModelMap model) {
+	public String searchTavolo(Model model) {
 		model.addAttribute("search_tavolo_attr", new TavoloDTO());
 		return "tavolo/search";
 	}
 	
 	@PostMapping("/list")
 	public String listTavoli(TavoloDTO tavoloExample, ModelMap model) {
-		List<Tavolo> tavoli = tavoloService.findByExample(tavoloExample.buildTavoloModel());
+		List<Tavolo> tavoli = tavoloService.findByExample(tavoloExample);
 		model.addAttribute("tavoli_list_attribute", TavoloDTO.createTavoloDTOListFromModelList(tavoli));
-		return "tavolo/list";
+		return "tavolo/listaGenerica";
 	}
-	
-	//Per ora
-	@PostMapping("/listAll")
-	public String listaTavoli(TavoloDTO tavoloExample, ModelMap model) {
-		List<Tavolo> tavoli = tavoloService.listAllElements();
-		model.addAttribute("tavoli_list_attribute", TavoloDTO.createTavoloDTOListFromModelList(tavoli));
-		return "tavolo/list";
-	}
-
 	
 	@GetMapping("/show/{idTavolo}")
 	public String show(@PathVariable(required = true) Long idTavolo, Model model) {
@@ -173,9 +163,19 @@ public class TavoloController {
 	
 	@GetMapping("/gestione")
 	public String gestione(Model model) {
-
-		model.addAttribute("search_gestione_tavolo_attr", new TavoloDTO());
 		return "tavolo/searchGestioneTavolo";
+	}
+	
+	
+
+	@PostMapping("/listGestione")
+	public String listGestione(@ModelAttribute("search_gestione_tavolo_attr") TavoloDTO tavoloDTO, Model model,
+			RedirectAttributes redirectAttrs, HttpServletRequest request) {
+		
+		List<Tavolo> tavoli = tavoloService.findByExampleGestione(tavoloDTO, request.getUserPrincipal().getName());
+
+		model.addAttribute("tavoli_list_attribute", TavoloDTO.createTavoloDTOListFromModelList(tavoli));
+		return "tavolo/list";
 	}
 	
 	@GetMapping(value = "/searchUtentiAjax", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -196,16 +196,6 @@ public class TavoloController {
 		}
 
 		return new Gson().toJson(ja);
-	}
-
-	@PostMapping("/listGestione")
-	public String listGestione(@ModelAttribute("search_gestione_tavolo_attr") TavoloDTO tavoloDTO, Model model,
-			RedirectAttributes redirectAttrs, HttpServletRequest request) {
-		
-		List<Tavolo> tavoli = tavoloService.findByExampleGestione(tavoloDTO, request.getUserPrincipal().getName());
-
-		model.addAttribute("tavoli_list_attribute", TavoloDTO.createTavoloDTOListFromModelList(tavoli));
-		return "tavolo/list";
 	}
 
 }
